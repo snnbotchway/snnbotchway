@@ -1,5 +1,5 @@
 - 👋 Hi, I’m @snnbotchway
-- 👀 I’m interested in web development, machine learning, AI and cybersecurity.
+- 👀 I’m interested in web development, machine learning and cybersecurity.
 - 🌱 I’m currently learning web development.
 - 📫 How to reach me solomonbotchway7@gmail.com
 
