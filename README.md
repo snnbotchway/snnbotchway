@@ -1,6 +1,6 @@
 - 👋 Hi, I’m @snnbotchway
-- 👀 I’m interested in web development, blockchain development(Web3), machine learning and cybersecurity.
-- 🌱 I’m currently learning web development.
+- 👀 I’m a web development, blockchain development(Web3), machine learning and cybersecurity enthusiast.
+- 🌱 I currently develop backends with Python Django.
 - 📫 How to reach me solomonbotchway7@gmail.com
 
 <!---
