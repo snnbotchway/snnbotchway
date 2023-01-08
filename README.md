@@ -1,5 +1,5 @@
 - 👋 Hi, I’m @snnbotchway
-- 👀 I’m a web development, blockchain development(Web3), machine learning and cybersecurity enthusiast.
+- 👀 I am passionate about web development, blockchain development (Web3), machine learning, and cybersecurity.
 - 👨‍💻 I engineer backends with Django, and provide production-grade scalable deployments with GitLab, AWS and Terraform.
 - 📫 How to reach me solomonbotchway7@gmail.com
 
