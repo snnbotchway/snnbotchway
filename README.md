@@ -1,7 +1,9 @@
-- 👋 Hi, I’m @snnbotchway, a tech enthusiast with a passion for web development, blockchain application development (Web3), machine learning, and cybersecurity.
-- 👨‍💻 I specialize in engineering backends with Django and have experience providing production-grade, scalable deployments with AWS, Terraform and Railway.
-- 🌟 With a commitment to staying up-to-date with the latest technologies and best practices, I strive to deliver innovative solutions that meet the needs of modern businesses.
-- 📫 Don't hesitate to reach out to me at solomonbotchway7@gmail.com to learn more or discuss potential collaborations!
+Hi there! I'm Solomon, a blockchain and backend developer with a passion for building scalable and secure applications using the latest technologies.
+
+- 🚀 I specialize in developing smart contracts using Solidity, and have experience deploying them to Ethereum and other blockchain networks.
+- 💻 In addition, I have expertise in engineering backends with Django and have experience providing production-grade, scalable deployments with AWS, Terraform, and Railway.
+- 🌟 I also have experience building decentralized applications, leveraging the power of Web3 to deliver scalable and user-friendly dApps.
+- 📧 Feel free to reach out to me at solomonbotchway7@gmail.com to learn more or discuss potential collaborations in the blockchain and web development space!
 
 
 <!---
