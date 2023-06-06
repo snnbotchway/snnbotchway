@@ -1,4 +1,4 @@
-Hi there! I'm Solomon, a blockchain and backend developer with a passion for building scalable and secure applications using the latest technologies.
+Hi there! I'm Solomon, a smart contract and backend developer with a passion for building scalable and secure applications using the latest technologies.
 
 - 🚀 I specialize in developing smart contracts using Solidity, and have experience deploying them to Ethereum and other blockchain networks.
 - 💻 In addition, I have expertise in engineering backends with Django and have experience providing production-grade, scalable deployments with AWS, Terraform, and Railway.
