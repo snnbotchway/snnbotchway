@@ -306,7 +306,7 @@ def readme(stats: dict, frame: Frame) -> str:
         private=f"{since['private_prs']:,}",
         prs=f"{since['prs']:,}",
         repos=since["repos"],
-        private_projects=since["private_projects"],
+        private_projects=f"{since['private_projects']} private project{'' if since['private_projects'] == '1' else 's'}",
         median=f"{since['median']:,}",
         p90=f"{since['p90']:,}",
         tests=round(since["test_share"] * 100),

@@ -10,13 +10,13 @@ Since ${surge_month}: **${prs}** PRs in **${repos}** repos. Half are under **${m
 
 ### My best work is private
 
-${private} of my ${prs} PRs since ${surge_month} went to ${private_projects} private projects for my employer and clients, so I can't link any of it. Think internal systems a business runs on every day, payment and messaging tools, and DeFi backends. What's below is the stuff I'm allowed to show.
+${private} of my ${prs} PRs since ${surge_month} went to ${private_projects} for my employer and clients, so I can't link any of it. Think internal systems a business runs on every day, payment and messaging tools, and DeFi backends.
 
-### Side projects
+### What I can show
 
 - [Scrimly](https://github.com/snnbotchway/scrimly-case-study): a tournament platform for mobile esports that I built on my own and ran in production. Teams uploaded their match screenshots and AI read the scores straight into the leaderboard.
-- [faultline](https://github.com/snnbotchway/faultline): a better frontend for self-hosted GlitchTip. Issues, uptime, performance, logs, releases, alerts, the lot. Built because I needed it at work.
-- [django-entra-staff](https://github.com/snnbotchway/django-entra-staff): staff sign-in for Django apps. Microsoft Entra, passwords that need an authenticator code, and access by group. Built because I needed it at work.
+- [faultline](https://github.com/snnbotchway/faultline): a better frontend for self-hosted GlitchTip. Issues, uptime, performance, logs, releases, alerts, the lot. I built it for the error tracking we run at work.
+- [django-entra-staff](https://github.com/snnbotchway/django-entra-staff): staff sign-in for Django apps. Microsoft Entra, passwords that need an authenticator code, and access by group. Our internal apps at work sign in with it.
 
 ### Merged upstream
 
