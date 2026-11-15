@@ -7,7 +7,7 @@ import json
 import math
 import textwrap
 from dataclasses import dataclass
-from datetime import date, timedelta
+from datetime import date
 from enum import StrEnum
 from html import escape
 from pathlib import Path
@@ -277,8 +277,8 @@ def picture(chart: Chart, alt: str) -> str:
 
 
 def is_partial(month: date, generated: date) -> bool:
-    return (month.year, month.month) == (generated.year, generated.month) and \
-        (generated + timedelta(days=1)).month == generated.month
+    """The month the stats were collected in is still in progress, even on its last day."""
+    return (month.year, month.month) == (generated.year, generated.month)
 
 
 def readme(stats: dict, frame: Frame) -> str:
@@ -297,7 +297,7 @@ def readme(stats: dict, frame: Frame) -> str:
         prs_chart=picture(Chart.PRS, prs_alt),
         lines_chart=picture(Chart.LINES, lines_alt),
         partial_month_note=f"{latest:%B} counts to the {ordinal(generated.day)}. " if partial else "",
-        private=f"{sum(months[key]['private'] for key in frame.keys[frame.surge:]):,}",
+        private=f"{since['private_prs']:,}",
         prs=f"{since['prs']:,}",
         repos=since["repos"],
         private_projects=since["private_projects"],
