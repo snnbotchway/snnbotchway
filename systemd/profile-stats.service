@@ -1,0 +1,9 @@
+[Unit]
+Description=Refresh the shipping stats on the GitHub profile README
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+Environment=PATH=%h/.local/bin:/usr/local/bin:/usr/bin:/bin
+ExecStart=%h/dev/snnbotchway/stats/update.sh
