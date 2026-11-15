@@ -1,12 +1,12 @@
-Forward deployed engineer. I join a team, learn its stack and ship production software fast.
+**Forward deployed engineer.** I join a team, learn its stack, and ship production software fast.
 
-I've shipped with coding agents since December 2025. In September I rebuilt my agent fleet and how I work with it: I write the specs, agents build, and every PR gets up to three independent review rounds and green CI before I merge.
+In September I rebuilt how I work. I run a fleet of coding agents on three machines and direct them through [T3 Code](https://github.com/pingdotgg/t3code) from my PC, phone or tablet. They share 46 skills and switch to another model provider when one runs out. They check their own work: tests against real services, screenshots of every screen at phone and desktop size, and up to three independent review rounds with green CI before I merge. I write the specs and make the calls.
 
-<picture><source media="(prefers-color-scheme: dark)" srcset="assets/prs-dark.svg"><img src="assets/prs-light.svg" alt="Merged PRs per month by size: about 11 a month until August 2026, then 66 in September and 208 so far in November" width="560"></picture>
+<picture><source media="(prefers-color-scheme: dark)" srcset="assets/prs-dark.svg"><img src="assets/prs-light.svg" alt="Merged PRs per month by size: about 11 a month until August 2026, then 66 in September and 203 so far in November" width="560"></picture>
 
-<sub>November counts to the 15th. 388 of the 439 PRs since September went to 15+ private projects, shown as totals only.</sub>
+<sub>November counts to the 15th. 388 of the 434 PRs since September went to 15+ private projects.</sub>
 
-Since September: **439** PRs · **23** repos · median **188** lines · 90th percentile **3,671** · **24%** tests
+Since September: **434** PRs · **23** repos · median **190** lines · 90th percentile **3,671** · **24%** tests
 
 **Own projects**
 
@@ -29,11 +29,8 @@ Since September: **439** PRs · **23** repos · median **188** lines · 90th per
 Measure | Since September
 --- | --:
 [Lines written](https://github.com/snnbotchway/snnbotchway/blob/main/stats/README.md#lines-written), uncapped | 843k
-Median PR | 188 lines
-90th percentile PR | 3,671 lines
 PRs over 1,000 lines | 101
 PRs over 5,000 lines | 31
-Share of lines that are tests | 24%
 
 </details>
 

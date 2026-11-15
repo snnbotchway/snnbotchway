@@ -2,6 +2,24 @@
   "generated": "2026-11-15",
   "surge_month": "2026-09",
   "line_cap_per_pr": 5000,
+  "size_bands": [
+    {
+      "key": "s",
+      "label": "<100"
+    },
+    {
+      "key": "m",
+      "label": "100\u20131k"
+    },
+    {
+      "key": "l",
+      "label": "1k\u20135k"
+    },
+    {
+      "key": "xl",
+      "label": "5k+"
+    }
+  ],
   "months": {
     "2025-11": {
       "prs": 3,
@@ -64,12 +82,12 @@
       "xl": 0
     },
     "2026-05": {
-      "prs": 21,
-      "private": 21,
-      "additions": 3940,
-      "deletions": 2661,
+      "prs": 20,
+      "private": 20,
+      "additions": 3749,
+      "deletions": 2657,
       "s": 8,
-      "m": 12,
+      "m": 11,
       "l": 1,
       "xl": 0
     },
@@ -124,40 +142,26 @@
       "xl": 10
     },
     "2026-11": {
-      "prs": 208,
+      "prs": 203,
       "private": 160,
-      "additions": 141392,
-      "deletions": 51889,
-      "s": 90,
+      "additions": 141347,
+      "deletions": 51878,
+      "s": 85,
       "m": 70,
       "l": 31,
       "xl": 17
     }
   },
-  "last_30_days": {
-    "prs": 308,
-    "repos": 16,
-    "private_repos": 12,
-    "over_1k": 73,
-    "over_5k": 22,
-    "median": 190,
-    "p90": 3790,
-    "lines_written": 628538,
-    "lines_counted": 276287,
-    "test_share": 0.276
-  },
   "since_surge": {
-    "prs": 439,
+    "prs": 434,
     "repos": 23,
-    "private_repos": 16,
+    "private_projects": "15+",
     "over_1k": 101,
     "over_5k": 31,
-    "median": 188,
+    "median": 190,
     "p90": 3671,
-    "lines_written": 843245,
-    "lines_counted": 387058,
+    "lines_written": 843189,
     "test_share": 0.243
   },
-  "monthly_prs_before_surge": 11.3,
-  "skipped_repeat_prs": 54
+  "monthly_prs_before_surge": 11.2
 }
