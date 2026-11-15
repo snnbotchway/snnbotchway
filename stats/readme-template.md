@@ -1,24 +1,24 @@
-**Forward deployed engineer.** I join a team, learn its stack, and ship production software fast.
+**I'm a forward deployed engineer.** Drop me into your team and I'll learn the stack and get things into production fast.
 
-In ${surge_month} I rebuilt how I work around a fleet of coding agents, directed through [T3 Code](https://github.com/pingdotgg/t3code) from my PC, phone or tablet. I write the specs and make the calls. Changes pass tests against real services, phone and desktop screenshot checks on every changed screen, and up to three independent review rounds with green CI before I merge.
+In ${surge_month} I went all in on coding agents. I built my own setup around them and I run it from [T3 Code](https://github.com/pingdotgg/t3code) on my PC or my phone. I write the spec, the agents build it, and nothing gets merged until it's tested, reviewed (up to three times) and green on CI. That's the jump you see below.
 
 ${prs_chart}
 
-<sub>Counted to ${counted_to}. ${private} of the ${prs} PRs since ${surge_month} went to ${private_projects} private projects.</sub>
+<sub>Counted to ${counted_to}. ${private} of the ${prs} PRs since ${surge_month} were private work across ${private_projects} projects, so you only get the totals.</sub>
 
-Since ${surge_month}: **${prs}** PRs across **${repos}** repos · half under **${median}** lines, 90% under **${p90}** · **${tests}%** of changed lines are tests · [a typical PR](https://github.com/snnbotchway/faultline/pull/22)
+Since ${surge_month}: **${prs}** PRs in **${repos}** repos. Half are under **${median}** lines and 90% are under **${p90}**. **${tests}%** of the lines I change are tests. [Here's a typical one.](https://github.com/snnbotchway/faultline/pull/22)
 
 ### Own projects
 
-- [faultline](https://github.com/snnbotchway/faultline): a complete frontend for self-hosted GlitchTip, covering issues, uptime, performance, logs, releases, alerts and settings.
-- [django-entra-staff](https://github.com/snnbotchway/django-entra-staff): staff sign-in for Django with Microsoft Entra, passwords with a required authenticator code, and group-based access.
-- [Scrimly](https://github.com/snnbotchway/scrimly-case-study): tournament software for mobile esports that I built solo and ran in production. Teams registered, uploaded match screenshots, and AI read the scores into leaderboards; organisers paid through subscriptions.
+- [faultline](https://github.com/snnbotchway/faultline): a better frontend for self-hosted GlitchTip. Issues, uptime, performance, logs, releases, alerts, the lot.
+- [django-entra-staff](https://github.com/snnbotchway/django-entra-staff): staff sign-in for Django apps. Microsoft Entra, passwords that need an authenticator code, and access by group.
+- [Scrimly](https://github.com/snnbotchway/scrimly-case-study): a tournament platform for mobile esports that I built on my own and ran in production. Teams uploaded their match screenshots and AI read the scores straight into the leaderboard.
 
 ### Merged upstream
 
-- OpenZeppelin relayer: [Redis TLS support](https://github.com/OpenZeppelin/openzeppelin-relayer/pull/674) and [unique IDs for Redis workers](https://github.com/OpenZeppelin/openzeppelin-relayer/pull/892); in its SDK, [support for newer Node versions](https://github.com/OpenZeppelin/openzeppelin-relayer-sdk/pull/168)
-- t3code: Chrome security fixes for the preview browser, [Chrome 156](https://github.com/pingdotgg/t3code/pull/27822) and [Chrome 157](https://github.com/pingdotgg/t3code/pull/30820)
-- djoser: [rewrote the activation email template](https://github.com/sunscrapers/djoser/pull/731)
+- OpenZeppelin relayer: added [Redis TLS support](https://github.com/OpenZeppelin/openzeppelin-relayer/pull/674) and [unique IDs for Redis workers](https://github.com/OpenZeppelin/openzeppelin-relayer/pull/892), plus [newer Node support](https://github.com/OpenZeppelin/openzeppelin-relayer-sdk/pull/168) in the SDK.
+- t3code: kept the preview browser on the latest Chrome security fixes ([156](https://github.com/pingdotgg/t3code/pull/27822), [157](https://github.com/pingdotgg/t3code/pull/30820)).
+- djoser: [rewrote the activation email](https://github.com/sunscrapers/djoser/pull/731).
 
 <details>
 <summary>Lines shipped and PR sizes</summary>
