@@ -10,7 +10,7 @@ A merged PR counts once. These are left out because they carry work already coun
 - PRs that sync a fork with its upstream project
 - reverts and dependency bumps
 
-## Lines written
+## Lines shipped
 
 A PR's size is the lines it added plus the lines it removed, in files a person writes. These files are left out:
 
@@ -23,7 +23,7 @@ A PR's size is the lines it added plus the lines it removed, in files a person w
 
 **Size bands:** small is under 100 lines, medium 100 to 1,000, large 1,000 to 5,000, extra large 5,000 or more.
 
-**Lines chart:** each PR counts at most 5,000 lines in the lines chart, so a few huge PRs can't carry the total. The "lines written" figure has no cap.
+**Lines chart:** each PR counts at most 5,000 lines in the lines chart, so a few huge PRs can't carry the total. The "lines shipped" figure has no cap.
 
 **Tests:** the share of lines in test files, such as files under `tests/`, `*.test.ts`, `*_test.go` and `*.t.sol`.
 
