@@ -6,4 +6,6 @@ Wants=network-online.target
 [Service]
 Type=oneshot
 Environment=PATH=%h/.local/bin:/usr/local/bin:/usr/bin:/bin
-ExecStart=%h/dev/snnbotchway/stats/update.sh
+Environment=CHECKOUT=%h/.local/share/profile-stats/snnbotchway
+ExecStartPre=/bin/sh -c 'git -C "$CHECKOUT" fetch --quiet origin main && git -C "$CHECKOUT" reset --quiet --hard origin/main'
+ExecStart=/bin/sh -c 'exec "$CHECKOUT/stats/update.sh"'
