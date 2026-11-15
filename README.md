@@ -4,19 +4,23 @@ In September I went all in on coding agents. I built my own setup around them an
 
 <picture><source media="(prefers-color-scheme: dark)" srcset="assets/prs-dark.svg"><img src="assets/prs-light.svg" alt="Merged PRs per month by size: about 23 a month from May to August 2026, then 66 in September and 205 so far in November" width="560"></picture>
 
-<sub>Counted to 15 November. 387 of the 435 PRs since September were private work across 15+ projects, so you only get the totals.</sub>
+<sub>Counted to 15 November.</sub>
 
 Since September: **435** PRs in **20+** repos. Half are under **191** lines and 90% are under **3,671**. **24%** of the lines I change are tests. [Here's a typical one.](https://github.com/snnbotchway/faultline/pull/22)
 
-### Own projects
+### My best work is private
 
-- [faultline](https://github.com/snnbotchway/faultline): a better frontend for self-hosted GlitchTip. Issues, uptime, performance, logs, releases, alerts, the lot.
-- [django-entra-staff](https://github.com/snnbotchway/django-entra-staff): staff sign-in for Django apps. Microsoft Entra, passwords that need an authenticator code, and access by group.
+387 of my 435 PRs since September went to 15+ private projects for my employer and clients, so I can't link any of it. Think internal systems a business runs on every day, payment and messaging tools, and DeFi backends. What's below is the stuff I'm allowed to show.
+
+### Side projects
+
 - [Scrimly](https://github.com/snnbotchway/scrimly-case-study): a tournament platform for mobile esports that I built on my own and ran in production. Teams uploaded their match screenshots and AI read the scores straight into the leaderboard.
+- [faultline](https://github.com/snnbotchway/faultline): a better frontend for self-hosted GlitchTip. Issues, uptime, performance, logs, releases, alerts, the lot. Built because I needed it at work.
+- [django-entra-staff](https://github.com/snnbotchway/django-entra-staff): staff sign-in for Django apps. Microsoft Entra, passwords that need an authenticator code, and access by group. Built because I needed it at work.
 
 ### Merged upstream
 
-- OpenZeppelin relayer: added [Redis TLS support](https://github.com/OpenZeppelin/openzeppelin-relayer/pull/674) and [unique IDs for Redis workers](https://github.com/OpenZeppelin/openzeppelin-relayer/pull/892), plus [newer Node support](https://github.com/OpenZeppelin/openzeppelin-relayer-sdk/pull/168) in the SDK.
+- OpenZeppelin relayer: [Redis TLS support](https://github.com/OpenZeppelin/openzeppelin-relayer/pull/674) and [unique IDs for Redis workers](https://github.com/OpenZeppelin/openzeppelin-relayer/pull/892), plus [newer Node support](https://github.com/OpenZeppelin/openzeppelin-relayer-sdk/pull/168) in the SDK. I needed all three for client work in production, so I added them upstream.
 - t3code: kept the preview browser on the latest Chrome security fixes ([156](https://github.com/pingdotgg/t3code/pull/27822), [157](https://github.com/pingdotgg/t3code/pull/30820)).
 - djoser: [rewrote the activation email](https://github.com/sunscrapers/djoser/pull/731).
 
@@ -33,5 +37,7 @@ PRs of 1,000 lines or more | 101
 PRs of 5,000 lines or more | 31
 
 </details>
+
+Hiring? Email me at [solomonbotchway7@gmail.com](mailto:solomonbotchway7@gmail.com) and I'll walk you through the private work, as far as my NDAs allow.
 
 <sub>Updated 15 Nov 2026 · <a href="https://github.com/snnbotchway/snnbotchway/blob/main/stats/README.md">How these numbers are counted</a></sub>
