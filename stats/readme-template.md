@@ -1,10 +1,10 @@
-Forward deployed engineer. I join a team, learn its stack and ship production software fast.
+**Forward deployed engineer.** I join a team, learn its stack, and ship production software fast.
 
-I've shipped with coding agents since December 2025. In ${surge_month} I rebuilt my agent fleet and how I work with it: I write the specs, agents build, and every PR gets up to three independent review rounds and green CI before I merge.
+In ${surge_month} I rebuilt how I work. I run a fleet of coding agents on three machines and direct them through [T3 Code](https://github.com/pingdotgg/t3code) from my PC, phone or tablet. They share 46 skills and switch to another model provider when one runs out. They check their own work: tests against real services, screenshots of every screen at phone and desktop size, and up to three independent review rounds with green CI before I merge. I write the specs and make the calls.
 
 ${prs_chart}
 
-<sub>${partial_month_note}${private} of the ${prs} PRs since ${surge_month} went to ${private_repos} private projects, shown as totals only.</sub>
+<sub>${partial_month_note}${private} of the ${prs} PRs since ${surge_month} went to ${private_projects} private projects.</sub>
 
 Since ${surge_month}: **${prs}** PRs · **${repos}** repos · median **${median}** lines · 90th percentile **${p90}** · **${tests}%** tests
 
@@ -29,11 +29,8 @@ ${lines_chart}
 Measure | Since ${surge_month}
 --- | --:
 [Lines written](${method_url}#lines-written), uncapped | ${written}
-Median PR | ${median} lines
-90th percentile PR | ${p90} lines
 PRs over 1,000 lines | ${over_1k}
 PRs over 5,000 lines | ${over_5k}
-Share of lines that are tests | ${tests}%
 
 </details>
 

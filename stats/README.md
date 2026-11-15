@@ -19,9 +19,9 @@ A PR's size is the lines it added plus the lines it removed, in files a person w
 - build output, minified files, snapshots, migrations, deployment records
 - images, fonts and other binary files
 - data files (JSON, YAML, CSV, HTML and similar) with more than 500 changed lines
-- lines that only moved with a renamed file
+- lines that only moved with a renamed file, when GitHub detects the rename
 
-**Size bands:** small is under 100 lines, medium 100 to 1,000, large 1,000 to 5,000, extra large over 5,000.
+**Size bands:** small is under 100 lines, medium 100 to 1,000, large 1,000 to 5,000, extra large 5,000 or more.
 
 **Lines chart:** each PR counts at most 5,000 lines in the lines chart, so a few huge PRs can't carry the total. The "lines written" figure has no cap.
 

@@ -73,7 +73,6 @@ PALETTES = {
     Theme.LIGHT: Palette("#1f2328", "#59636e", ("#86b6ef", "#3987e5", "#1c5cab", "#0d366b"), "#1a7f37", "#cf222e"),
     Theme.DARK: Palette("#f0f6fc", "#9198a1", ("#184f95", "#3987e5", "#86b6ef", "#cde2fb"), "#3fb950", "#f85149"),
 }
-SIZE_BUCKETS = (("s", "<100"), ("m", "100–1k"), ("l", "1k–5k"), ("xl", "5k+"))
 
 
 def text_width(text: str, size: float, bold: bool = False) -> float:
@@ -198,7 +197,7 @@ def draw_surge_line(svg: Svg, frame: Frame, top: float, bottom: float) -> None:
 def draw_month_axis(svg: Svg, frame: Frame) -> None:
     y = svg.height - 12
     svg.text(frame.left(0), y, f"{month_start(frame.keys[0]):%b %Y}", LABEL_SIZE, Tone.MUTED)
-    names = [f"{month_start(key):%b}" for key in frame.keys]
+    names = [f"{month:%b %Y}" if month.month == 1 else f"{month:%b}" for month in map(month_start, frame.keys)]
     for i in frame.labelled(names[frame.surge:], LABEL_SIZE, False):
         svg.text(frame.centre(i), y, names[i], LABEL_SIZE, Tone.MUTED, Anchor.MIDDLE)
 
@@ -208,7 +207,8 @@ def pr_chart(stats: dict, frame: Frame, theme: Theme) -> str:
     svg = Svg(PR_CHART_HEIGHT, theme, "Merged pull requests per month, stacked by size")
     title = "Lines per PR"
     svg.text(PAD, LEGEND_Y, title, LABEL_SIZE, Tone.MUTED)
-    swatches = [(color, name) for color, (_, name) in zip(svg.palette.sizes, SIZE_BUCKETS)]
+    bands = stats["size_bands"]
+    swatches = [(color, band["label"]) for color, band in zip(svg.palette.sizes, bands)]
     svg.legend(PAD + text_width(title, LABEL_SIZE) + 22, LEGEND_Y, swatches)
 
     plot_top, base = LEGEND_Y + 24, PR_CHART_HEIGHT - AXIS_SPACE
@@ -216,8 +216,8 @@ def pr_chart(stats: dict, frame: Frame, theme: Theme) -> str:
     tops = []
     for i, key in enumerate(frame.keys):
         y = base
-        for color, (bucket, _) in zip(svg.palette.sizes, SIZE_BUCKETS):
-            segment = months[key][bucket] * scale
+        for color, band in zip(svg.palette.sizes, bands):
+            segment = months[key][band["key"]] * scale
             gap = 2 if segment >= 6 and y != base else 0
             svg.rect(frame.left(i), y - segment, frame.bar, segment - gap, color)
             y -= segment
@@ -235,7 +235,7 @@ def pr_chart(stats: dict, frame: Frame, theme: Theme) -> str:
              min(tops[:frame.surge]) - 16 - (len(rows) - 1) * ROW_HEIGHT, rows, VALUE_SIZE, Anchor.MIDDLE)
 
     draw_surge_line(svg, frame, plot_top, base)
-    note = f"{month_start(stats['surge_month']):%b %Y}: rebuilt my agent fleet"
+    note = f"{month_start(stats['surge_month']):%b %Y}: built my agent fleet"
     note_x = frame.surge_x - 12
     svg.rows(note_x, plot_top + 26, balanced_rows(note, VALUE_SIZE, note_x - PAD, True), VALUE_SIZE, Anchor.END, True)
     svg.line(PAD, base + 1, CHART_WIDTH - PAD, base + 1)
@@ -300,7 +300,7 @@ def readme(stats: dict, frame: Frame) -> str:
         private=f"{sum(months[key]['private'] for key in frame.keys[frame.surge:]):,}",
         prs=f"{since['prs']:,}",
         repos=since["repos"],
-        private_repos=f"{since['private_repos'] // 5 * 5}+",
+        private_projects=since["private_projects"],
         median=f"{since['median']:,}",
         p90=f"{since['p90']:,}",
         tests=round(since["test_share"] * 100),
@@ -312,9 +312,22 @@ def readme(stats: dict, frame: Frame) -> str:
     )
 
 
+def charted_months(stats: dict) -> list[str]:
+    """Every month, but a month in progress only once it has overtaken the one before it.
+
+    Otherwise the first week of each month draws a near-empty bar that reads as a collapse.
+    """
+    keys = sorted(stats["months"])
+    latest, previous = keys[-1], keys[-2]
+    in_progress = is_partial(month_start(latest), date.fromisoformat(stats["generated"]))
+    if in_progress and stats["months"][latest]["prs"] < stats["months"][previous]["prs"]:
+        return keys[:-1]
+    return keys
+
+
 def main() -> None:
     stats = json.loads(STATS_FILE.read_text())
-    keys = sorted(stats["months"])
+    keys = charted_months(stats)
     frame = Frame(keys, keys.index(stats["surge_month"]))
     ASSETS_DIR.mkdir(exist_ok=True)
     for theme in Theme:
