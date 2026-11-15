@@ -10,13 +10,13 @@ Since ${surge_month}: **${prs}** PRs in **${repos}** repos. Half are under **${m
 
 ### My best work is private
 
-${private} of my ${prs} PRs since ${surge_month} went to ${private_projects} for my employer and clients, so I can't link any of it. Think internal systems a business runs on every day, payment and messaging tools, and DeFi backends.
+[**${private}** of those ${prs} PRs](${method_url}) went to ${private_projects} for my employer and clients, so I can't link any of it. Think internal systems a business runs on every day, payment and messaging tools, and DeFi backends. Email me at [solomonbotchway7@gmail.com](mailto:solomonbotchway7@gmail.com) and I'll walk you through it, as far as my NDAs allow.
 
 ### What I can show
 
-- [Scrimly](https://github.com/snnbotchway/scrimly-case-study): a tournament platform for mobile esports that I built on my own and ran in production. Teams uploaded their match screenshots and AI read the scores straight into the leaderboard.
 - [faultline](https://github.com/snnbotchway/faultline): a better frontend for self-hosted GlitchTip. Issues, uptime, performance, logs, releases, alerts, the lot. I built it for the error tracking we run at work.
 - [django-entra-staff](https://github.com/snnbotchway/django-entra-staff): staff sign-in for Django apps. Microsoft Entra, passwords that need an authenticator code, and access by group. Our internal apps at work sign in with it.
+- [Scrimly](https://github.com/snnbotchway/scrimly-case-study): a tournament platform for mobile esports that I built on my own and ran in production. Teams uploaded their match screenshots and AI read the scores straight into the leaderboard.
 
 ### Merged upstream
 
@@ -38,6 +38,6 @@ PRs of ${extra_large_floor} lines or more | ${extra_large}
 
 </details>
 
-Hiring? Email me at [solomonbotchway7@gmail.com](mailto:solomonbotchway7@gmail.com) and I'll walk you through the private work, as far as my NDAs allow.
+Hiring? Email me at [solomonbotchway7@gmail.com](mailto:solomonbotchway7@gmail.com).
 
 <sub>Updated ${updated} · <a href="${method_url}">How these numbers are counted</a></sub>
