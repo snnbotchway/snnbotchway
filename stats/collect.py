@@ -17,6 +17,7 @@ from pathlib import Path
 USER = "snnbotchway"
 FIRST_MONTH = date(2025, 11, 1)
 SURGE_MONTH = "2026-09"
+BASELINE_MONTHS = 4
 LINE_CAP_PER_PR = 5000
 DATA_FILE_LINE_LIMIT = 500
 
@@ -55,7 +56,7 @@ TEST_PATTERN = re.compile(
 PROMOTION_BRANCHES = {"main", "master", "staging", "develop", "dev", "production", "prod", "release"}
 RELEASE_BRANCH = re.compile(r"^(release|hotfix)/")
 SKIPPED_TITLE = re.compile(
-    r"^(revert\b|bump\b|(chore|build)\(deps|(back-?)?merge\b|update fork\b|((chore|build|ci)(\([^)]*\))?: )?promote\b)"
+    r"^(revert\b|bump\b|(chore|build|fix)\(deps|(back-?)?merge\b|update fork\b|((chore|build|ci)(\([^)]*\))?: )?promote\b)"
     r"|\b(sync|merge|update)\b.*\bupstream\b",
     re.I,
 )
@@ -227,23 +228,27 @@ def summarize(rows: list[dict], today: date) -> dict:
             "repos": rough_count(len({r["repo"] for r in picked})),
             "private_prs": sum(r["private"] for r in picked),
             "private_projects": rough_count(len({r["repo"] for r in picked if r["private"]})),
-            "over_1k": sum(t >= FLOORS[Size.L] for t in totals),
-            "over_5k": sum(t >= FLOORS[Size.XL] for t in totals),
+            "large": sum(t >= FLOORS[Size.L] for t in totals),
+            "extra_large": sum(t >= FLOORS[Size.XL] for t in totals),
             "median": round(statistics.median(totals)) if totals else 0,
             "p90": totals[int(len(totals) * 0.9)] if totals else 0,
-            "lines_written": written,
+            "lines_shipped": written,
             "test_share": round(sum(r["tests"] for r in picked) / written, 3) if written else 0,
         }
 
-    before = [m for key, m in months.items() if key < SURGE_MONTH]
+    baseline = sorted(key for key in months if key < SURGE_MONTH)[-BASELINE_MONTHS:]
     return {
         "generated": today.isoformat(),
         "surge_month": SURGE_MONTH,
         "line_cap_per_pr": LINE_CAP_PER_PR,
-        "size_bands": [{"key": size.value, "label": label} for size, _, label in SIZE_BANDS],
+        "size_bands": [{"key": size.value, "label": label, "floor": floor} for size, floor, label in SIZE_BANDS],
         "months": months,
         "since_surge": window(date.fromisoformat(f"{SURGE_MONTH}-01")),
-        "monthly_prs_before_surge": round(sum(m["prs"] for m in before) / len(before), 1),
+        "baseline": {
+            "first_month": baseline[0],
+            "last_month": baseline[-1],
+            "prs_per_month": round(sum(months[key]["prs"] for key in baseline) / len(baseline), 1),
+        },
     }
 
 
