@@ -124,24 +124,31 @@ def is_repeat_of_counted_work(pr: dict) -> bool:
     return bool(SKIPPED_TITLE.search(pr["title"]))
 
 
+def cached(key: str, compute):
+    """Merged PRs and their files never change, so each lookup is fetched once and kept."""
+    value = read_cache(key)
+    if value is None:
+        value = compute()
+        write_cache(key, value)
+    return value
+
+
 def linguist_patterns(repo: str) -> list[str]:
-    key = f"gitattributes/{cache_name(repo)}.json"
-    cached = read_cache(key)
-    if cached is not None:
-        return cached
+    return cached(f"gitattributes/{cache_name(repo)}.json", lambda: fetch_linguist_patterns(repo))
+
+
+def fetch_linguist_patterns(repo: str) -> list[str]:
     try:
         text = gh("api", f"repos/{repo}/contents/.gitattributes", "-H", "Accept: application/vnd.github.raw")
     except subprocess.CalledProcessError as error:
         if "HTTP 404" not in error.stderr:
             raise
         text = ""
-    patterns = [
+    return [
         line.split()[0].lstrip("/")
         for line in text.splitlines()
         if re.search(r"linguist-(generated|vendored)(=true)?(\s|$)", line) and not line.startswith("#")
     ]
-    write_cache(key, patterns)
-    return patterns
 
 
 def is_written_by_hand(path: str, changes: int, linguist: list[str]) -> bool:
@@ -157,17 +164,14 @@ def is_written_by_hand(path: str, changes: int, linguist: list[str]) -> bool:
 
 
 def pr_files(pr: dict) -> list[list]:
-    """[path, additions, deletions] for each file of a merged PR; cached, since merged PRs do not change."""
     repo, number = pr["repository"]["nameWithOwner"], pr["number"]
-    key = f"files/{cache_name(repo)}__{number}.json"
-    cached = read_cache(key)
-    if cached is not None:
-        return cached
+    return cached(f"files/{cache_name(repo)}__{number}.json", lambda: fetch_pr_files(repo, number))
+
+
+def fetch_pr_files(repo: str, number: int) -> list[list]:
     out = gh("api", "--paginate", f"repos/{repo}/pulls/{number}/files?per_page=100",
              "--jq", ".[] | [.filename, .additions, .deletions] | @json")
-    files = [json.loads(row) for row in out.splitlines()]
-    write_cache(key, files)
-    return files
+    return [json.loads(row) for row in out.splitlines()]
 
 
 def pr_lines(pr: dict) -> dict:
@@ -196,7 +200,7 @@ def capped(lines: dict) -> tuple[int, int]:
 
 
 def rough_count(n: int) -> str:
-    """Round down to a multiple of 5 ("15+"), so the exact number of private projects stays private."""
+    """Round down to a multiple of 5 ("15+"); exact repo counts would reveal the number of private projects."""
     return str(n) if n < 5 else f"{n // 5 * 5}+"
 
 
@@ -220,7 +224,8 @@ def summarize(rows: list[dict], today: date) -> dict:
         written = sum(totals)
         return {
             "prs": len(picked),
-            "repos": len({r["repo"] for r in picked}),
+            "repos": rough_count(len({r["repo"] for r in picked})),
+            "private_prs": sum(r["private"] for r in picked),
             "private_projects": rough_count(len({r["repo"] for r in picked if r["private"]})),
             "over_1k": sum(t >= FLOORS[Size.L] for t in totals),
             "over_5k": sum(t >= FLOORS[Size.XL] for t in totals),
