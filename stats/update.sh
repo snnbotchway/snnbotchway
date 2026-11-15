@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Weekly refresh, run from its own clone of main (the service's ExecStartPre syncs it), so it never
+# Weekly refresh, run from its own clone of main (the service resets it first), so it never
 # commits to a branch someone is working on. Commits use an identity no GitHub account owns, so they
 # add nothing to the contribution graph.
 set -euo pipefail
