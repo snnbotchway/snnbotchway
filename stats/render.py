@@ -35,7 +35,7 @@ AXIS_SPACE = 50
 LABEL_SIZE = 26
 VALUE_SIZE = 28
 ROW_HEIGHT = 34
-LABEL_GAP = 8
+LABEL_GAP = 4
 FONT = '-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helvetica,Arial,sans-serif'
 
 
@@ -70,8 +70,8 @@ class Palette:
 
 
 PALETTES = {
-    Theme.LIGHT: Palette("#1f2328", "#59636e", ("#86b6ef", "#3987e5", "#1c5cab", "#0d366b"), "#1a7f37", "#cf222e"),
-    Theme.DARK: Palette("#f0f6fc", "#9198a1", ("#184f95", "#3987e5", "#86b6ef", "#cde2fb"), "#3fb950", "#f85149"),
+    Theme.LIGHT: Palette("#1f2328", "#59636e", ("#5a9be6", "#3987e5", "#1c5cab", "#0d366b"), "#1a7f37", "#cf222e"),
+    Theme.DARK: Palette("#f0f6fc", "#9198a1", ("#2a6fc4", "#3987e5", "#86b6ef", "#cde2fb"), "#3fb950", "#f85149"),
 }
 
 
@@ -83,11 +83,6 @@ def compact(n: int) -> str:
     if n >= 999_500:
         return f"{n / 1e6:.1f}M"
     return f"{round(n / 1000)}k" if n >= 1000 else str(n)
-
-
-def ordinal(n: int) -> str:
-    suffix = "th" if 10 < n % 100 < 14 else {1: "st", 2: "nd", 3: "rd"}.get(n % 10, "th")
-    return f"{n}{suffix}"
 
 
 def month_start(key: str) -> date:
@@ -228,7 +223,7 @@ def pr_chart(stats: dict, frame: Frame, theme: Theme) -> str:
         clear = min(tops[j] for j in frame.beneath(i, text_width(counts[i], VALUE_SIZE, True)))
         svg.text(frame.centre(i), clear - 10, counts[i], VALUE_SIZE, anchor=Anchor.MIDDLE, bold=True)
 
-    before = f"about {round(stats['monthly_prs_before_surge'])} a month"
+    before = baseline_label(stats["baseline"])
     span = frame.left(frame.surge - 1) + frame.bar - frame.left(0)
     rows = balanced_rows(before, VALUE_SIZE, span, False)
     svg.rows((frame.left(0) + frame.left(frame.surge - 1) + frame.bar) / 2,
@@ -281,6 +276,11 @@ def is_partial(month: date, generated: date) -> bool:
     return (month.year, month.month) == (generated.year, generated.month)
 
 
+def baseline_label(baseline: dict) -> str:
+    first, last = month_start(baseline["first_month"]), month_start(baseline["last_month"])
+    return f"about {round(baseline['prs_per_month'])} a month ({first:%b}–{last:%b})"
+
+
 def readme(stats: dict, frame: Frame) -> str:
     months, since = stats["months"], stats["since_surge"]
     generated = date.fromisoformat(stats["generated"])
@@ -288,15 +288,21 @@ def readme(stats: dict, frame: Frame) -> str:
     surge_name = f"{surge:%B}" if surge.year == generated.year else f"{surge:%B %Y}"
     latest = month_start(frame.keys[-1])
     partial = is_partial(latest, generated)
-    prs_alt = (f"Merged PRs per month by size: about {round(stats['monthly_prs_before_surge'])} a month until "
-               f"{month_start(frame.keys[frame.surge - 1]):%B %Y}, then {months[stats['surge_month']]['prs']} "
-               f"in {surge:%B} and {months[frame.keys[-1]]['prs']} {'so far ' if partial else ''}in {latest:%B}")
-    lines_alt = f"Lines added and deleted per month, capped at {stats['line_cap_per_pr']:,} lines per PR"
+    baseline = stats["baseline"]
+    prs_alt = (f"Merged PRs per month by size: about {round(baseline['prs_per_month'])} a month from "
+               f"{month_start(baseline['first_month']):%B} to {month_start(baseline['last_month']):%B %Y}, then "
+               f"{months[stats['surge_month']]['prs']} in {surge:%B} and {months[frame.keys[-1]]['prs']} "
+               f"{'so far ' if partial else ''}in {latest:%B}")
+    last = months[frame.keys[-1]]
+    lines_alt = (f"Lines added and deleted per month, capped at {stats['line_cap_per_pr']:,} lines per PR: "
+                 f"{compact(last['additions'])} added and {compact(last['deletions'])} deleted "
+                 f"{'so far ' if partial else ''}in {latest:%B}")
+    floors = {band["key"]: band["floor"] for band in stats["size_bands"]}
     return Template(TEMPLATE_FILE.read_text()).substitute(
         surge_month=surge_name,
         prs_chart=picture(Chart.PRS, prs_alt),
         lines_chart=picture(Chart.LINES, lines_alt),
-        partial_month_note=f"{latest:%B} counts to the {ordinal(generated.day)}. " if partial else "",
+        counted_to=f"{generated.day} {generated:%B}",
         private=f"{since['private_prs']:,}",
         prs=f"{since['prs']:,}",
         repos=since["repos"],
@@ -304,9 +310,11 @@ def readme(stats: dict, frame: Frame) -> str:
         median=f"{since['median']:,}",
         p90=f"{since['p90']:,}",
         tests=round(since["test_share"] * 100),
-        written=compact(since["lines_written"]),
-        over_1k=f"{since['over_1k']:,}",
-        over_5k=f"{since['over_5k']:,}",
+        shipped=compact(since["lines_shipped"]),
+        large=f"{since['large']:,}",
+        large_floor=f"{floors['l']:,}",
+        extra_large=f"{since['extra_large']:,}",
+        extra_large_floor=f"{floors['xl']:,}",
         updated=f"{generated.day} {generated:%b %Y}",
         method_url=METHOD_URL,
     )
