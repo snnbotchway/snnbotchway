@@ -1,0 +1,163 @@
+{
+  "generated": "2026-11-15",
+  "surge_month": "2026-09",
+  "line_cap_per_pr": 5000,
+  "months": {
+    "2025-11": {
+      "prs": 3,
+      "private": 3,
+      "additions": 2377,
+      "deletions": 1237,
+      "s": 1,
+      "m": 0,
+      "l": 2,
+      "xl": 0
+    },
+    "2025-12": {
+      "prs": 2,
+      "private": 2,
+      "additions": 4229,
+      "deletions": 772,
+      "s": 1,
+      "m": 0,
+      "l": 0,
+      "xl": 1
+    },
+    "2026-01": {
+      "prs": 3,
+      "private": 3,
+      "additions": 5819,
+      "deletions": 5144,
+      "s": 0,
+      "m": 1,
+      "l": 0,
+      "xl": 2
+    },
+    "2026-02": {
+      "prs": 8,
+      "private": 8,
+      "additions": 8908,
+      "deletions": 4702,
+      "s": 2,
+      "m": 1,
+      "l": 4,
+      "xl": 1
+    },
+    "2026-03": {
+      "prs": 2,
+      "private": 1,
+      "additions": 400,
+      "deletions": 15,
+      "s": 1,
+      "m": 1,
+      "l": 0,
+      "xl": 0
+    },
+    "2026-04": {
+      "prs": 3,
+      "private": 3,
+      "additions": 2563,
+      "deletions": 647,
+      "s": 0,
+      "m": 1,
+      "l": 2,
+      "xl": 0
+    },
+    "2026-05": {
+      "prs": 21,
+      "private": 21,
+      "additions": 3940,
+      "deletions": 2661,
+      "s": 8,
+      "m": 12,
+      "l": 1,
+      "xl": 0
+    },
+    "2026-06": {
+      "prs": 21,
+      "private": 21,
+      "additions": 7072,
+      "deletions": 1339,
+      "s": 12,
+      "m": 4,
+      "l": 5,
+      "xl": 0
+    },
+    "2026-07": {
+      "prs": 27,
+      "private": 27,
+      "additions": 10757,
+      "deletions": 1435,
+      "s": 8,
+      "m": 17,
+      "l": 2,
+      "xl": 0
+    },
+    "2026-08": {
+      "prs": 23,
+      "private": 22,
+      "additions": 12977,
+      "deletions": 3616,
+      "s": 5,
+      "m": 13,
+      "l": 4,
+      "xl": 1
+    },
+    "2026-09": {
+      "prs": 66,
+      "private": 64,
+      "additions": 35989,
+      "deletions": 21962,
+      "s": 27,
+      "m": 22,
+      "l": 13,
+      "xl": 4
+    },
+    "2026-10": {
+      "prs": 165,
+      "private": 164,
+      "additions": 98804,
+      "deletions": 37022,
+      "s": 60,
+      "m": 69,
+      "l": 26,
+      "xl": 10
+    },
+    "2026-11": {
+      "prs": 208,
+      "private": 160,
+      "additions": 141392,
+      "deletions": 51889,
+      "s": 90,
+      "m": 70,
+      "l": 31,
+      "xl": 17
+    }
+  },
+  "last_30_days": {
+    "prs": 308,
+    "repos": 16,
+    "private_repos": 12,
+    "over_1k": 73,
+    "over_5k": 22,
+    "median": 190,
+    "p90": 3790,
+    "lines_written": 628538,
+    "lines_counted": 276287,
+    "test_share": 0.276
+  },
+  "since_surge": {
+    "prs": 439,
+    "repos": 23,
+    "private_repos": 16,
+    "over_1k": 101,
+    "over_5k": 31,
+    "median": 188,
+    "p90": 3671,
+    "lines_written": 843245,
+    "lines_counted": 387058,
+    "test_share": 0.243
+  },
+  "monthly_prs_before_surge": 11.3,
+  "skipped_repeat_prs": 54
+}
