@@ -146,26 +146,26 @@
       "xl": 10
     },
     "2026-11": {
-      "prs": 204,
+      "prs": 205,
       "private": 160,
-      "additions": 141355,
+      "additions": 142300,
       "deletions": 51880,
       "s": 86,
-      "m": 70,
+      "m": 71,
       "l": 31,
       "xl": 17
     }
   },
   "since_surge": {
-    "prs": 434,
+    "prs": 435,
     "repos": "20+",
     "private_prs": 387,
     "private_projects": "15+",
     "large": 101,
     "extra_large": 31,
-    "median": 190,
+    "median": 191,
     "p90": 3671,
-    "lines_shipped": 843154,
+    "lines_shipped": 844099,
     "test_share": 0.243
   },
   "baseline": {

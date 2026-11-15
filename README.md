@@ -2,11 +2,11 @@
 
 In September I went all in on coding agents. I built my own setup around them and I run it from [T3 Code](https://github.com/pingdotgg/t3code) on my PC or my phone. I write the spec, the agents build it, and nothing gets merged until it's tested, reviewed (up to three times) and green on CI. That's the jump you see below.
 
-<picture><source media="(prefers-color-scheme: dark)" srcset="assets/prs-dark.svg"><img src="assets/prs-light.svg" alt="Merged PRs per month by size: about 23 a month from May to August 2026, then 66 in September and 204 so far in November" width="560"></picture>
+<picture><source media="(prefers-color-scheme: dark)" srcset="assets/prs-dark.svg"><img src="assets/prs-light.svg" alt="Merged PRs per month by size: about 23 a month from May to August 2026, then 66 in September and 205 so far in November" width="560"></picture>
 
-<sub>Counted to 15 November. 387 of the 434 PRs since September were private work across 15+ projects, so you only get the totals.</sub>
+<sub>Counted to 15 November. 387 of the 435 PRs since September were private work across 15+ projects, so you only get the totals.</sub>
 
-Since September: **434** PRs in **20+** repos. Half are under **190** lines and 90% are under **3,671**. **24%** of the lines I change are tests. [Here's a typical one.](https://github.com/snnbotchway/faultline/pull/22)
+Since September: **435** PRs in **20+** repos. Half are under **191** lines and 90% are under **3,671**. **24%** of the lines I change are tests. [Here's a typical one.](https://github.com/snnbotchway/faultline/pull/22)
 
 ### Own projects
 
@@ -24,11 +24,11 @@ Since September: **434** PRs in **20+** repos. Half are under **190** lines and 
 <summary>Lines shipped and PR sizes</summary>
 <br>
 
-<picture><source media="(prefers-color-scheme: dark)" srcset="assets/lines-dark.svg"><img src="assets/lines-light.svg" alt="Lines added and deleted per month, capped at 5,000 lines per PR: 141k added and 52k deleted so far in November" width="560"></picture>
+<picture><source media="(prefers-color-scheme: dark)" srcset="assets/lines-dark.svg"><img src="assets/lines-light.svg" alt="Lines added and deleted per month, capped at 5,000 lines per PR: 142k added and 52k deleted so far in November" width="560"></picture>
 
 Measure | Since September
 --- | --:
-[Lines shipped](https://github.com/snnbotchway/snnbotchway/blob/main/stats/README.md#lines-shipped), uncapped | 843k
+[Lines shipped](https://github.com/snnbotchway/snnbotchway/blob/main/stats/README.md#lines-shipped), uncapped | 844k
 PRs of 1,000 lines or more | 101
 PRs of 5,000 lines or more | 31
 
