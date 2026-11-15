@@ -142,25 +142,26 @@
       "xl": 10
     },
     "2026-11": {
-      "prs": 203,
+      "prs": 204,
       "private": 160,
-      "additions": 141347,
-      "deletions": 51878,
-      "s": 85,
+      "additions": 141355,
+      "deletions": 51880,
+      "s": 86,
       "m": 70,
       "l": 31,
       "xl": 17
     }
   },
   "since_surge": {
-    "prs": 434,
-    "repos": 23,
+    "prs": 435,
+    "repos": "20+",
+    "private_prs": 388,
     "private_projects": "15+",
     "over_1k": 101,
     "over_5k": 31,
-    "median": 190,
+    "median": 188,
     "p90": 3671,
-    "lines_written": 843189,
+    "lines_written": 843199,
     "test_share": 0.243
   },
   "monthly_prs_before_surge": 11.2
