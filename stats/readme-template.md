@@ -10,7 +10,7 @@ Since ${surge_month}: **${prs}** PRs in **${repos}** repos. Half are under **${m
 
 ### My best work is private
 
-[**${private}** of those ${prs} PRs](${method_url}) went to ${private_projects} for my employer and clients, so I can't link any of it. Think internal systems a business runs on every day, payment and messaging tools, and DeFi backends. Email me at [solomonbotchway7@gmail.com](mailto:solomonbotchway7@gmail.com) and I'll walk you through it, as far as my NDAs allow.
+[**${private}** of those ${prs} PRs](${method_url}) went to ${private_projects} for my employer and clients. All of it runs in production, and I can't link any of it. Think internal systems a business runs on every day, payment and messaging tools, and DeFi backends. Email me at [solomonbotchway7@gmail.com](mailto:solomonbotchway7@gmail.com) and I'll walk you through it, as far as my NDAs allow.
 
 ### What I can show
 
