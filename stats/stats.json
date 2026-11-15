@@ -5,19 +5,23 @@
   "size_bands": [
     {
       "key": "s",
-      "label": "<100"
+      "label": "<100",
+      "floor": 0
     },
     {
       "key": "m",
-      "label": "100\u20131k"
+      "label": "100\u20131k",
+      "floor": 100
     },
     {
       "key": "l",
-      "label": "1k\u20135k"
+      "label": "1k\u20135k",
+      "floor": 1000
     },
     {
       "key": "xl",
-      "label": "5k+"
+      "label": "5k+",
+      "floor": 5000
     }
   ],
   "months": {
@@ -132,11 +136,11 @@
       "xl": 4
     },
     "2026-10": {
-      "prs": 165,
-      "private": 164,
-      "additions": 98804,
-      "deletions": 37022,
-      "s": 60,
+      "prs": 164,
+      "private": 163,
+      "additions": 98780,
+      "deletions": 37001,
+      "s": 59,
       "m": 69,
       "l": 26,
       "xl": 10
@@ -153,16 +157,20 @@
     }
   },
   "since_surge": {
-    "prs": 435,
+    "prs": 434,
     "repos": "20+",
-    "private_prs": 388,
+    "private_prs": 387,
     "private_projects": "15+",
-    "over_1k": 101,
-    "over_5k": 31,
-    "median": 188,
+    "large": 101,
+    "extra_large": 31,
+    "median": 190,
     "p90": 3671,
-    "lines_written": 843199,
+    "lines_shipped": 843154,
     "test_share": 0.243
   },
-  "monthly_prs_before_surge": 11.2
+  "baseline": {
+    "first_month": "2026-05",
+    "last_month": "2026-08",
+    "prs_per_month": 22.8
+  }
 }
