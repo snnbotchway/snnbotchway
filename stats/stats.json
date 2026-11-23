@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-16",
+  "generated": "2026-11-23",
   "surge_month": "2026-09",
   "line_cap_per_pr": 5000,
   "size_bands": [
@@ -146,27 +146,27 @@
       "xl": 10
     },
     "2026-11": {
-      "prs": 208,
-      "private": 160,
-      "additions": 142367,
-      "deletions": 51907,
-      "s": 89,
-      "m": 71,
-      "l": 31,
-      "xl": 17
+      "prs": 289,
+      "private": 235,
+      "additions": 191450,
+      "deletions": 57491,
+      "s": 121,
+      "m": 102,
+      "l": 48,
+      "xl": 18
     }
   },
   "since_surge": {
-    "prs": 438,
-    "repos": "20+",
-    "private_prs": 387,
+    "prs": 519,
+    "repos": "25+",
+    "private_prs": 462,
     "private_projects": "15+",
-    "large": 101,
-    "extra_large": 31,
-    "median": 188,
-    "p90": 3671,
-    "lines_shipped": 844193,
-    "test_share": 0.243
+    "large": 119,
+    "extra_large": 32,
+    "median": 192,
+    "p90": 3204,
+    "lines_shipped": 903860,
+    "test_share": 0.238
   },
   "baseline": {
     "first_month": "2026-05",
