@@ -542,7 +542,7 @@ def readme(stats: dict, frame: Frame) -> str:
                          f"project{'' if since['private_projects'] == '1' else 's'}",
         median=f"{since['median']:,}",
         p90=f"{since['p90']:,}",
-        tests=round(since["test_share"] * 100),
+        tests=math.floor(since["test_share"] * 100 + 0.5),
         shipped=compact(since["lines_shipped"]),
         large=f"{since['large']:,}",
         large_floor=f"{floors[SizeKey.L]:,}",
