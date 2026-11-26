@@ -106,8 +106,6 @@ def noto_sans_width(text: str, size: float, bold: bool = False) -> float:
     return em * size * (1.02 if bold else 1)
 
 
-
-
 def band_label(band: dict) -> str:
     return f"{band['label']} lines"
 
@@ -456,11 +454,11 @@ def pr_chart(stats: dict, frame: Frame, theme: Theme) -> str:
     return svg.render(bottom + 8)
 
 
-
 def line_end_rows(stats: dict, keys: list[str], kind: LineKind) -> list[str]:
     month = stats["months"][keys[-1]]
     qualifier = " so far" if in_progress(stats, keys) else ""
     return [compact(month[kind]), f"{LINE_NAMES[kind]}{qualifier}"]
+
 
 def lines_chart(stats: dict, frame: Frame, theme: Theme) -> str:
     months, keys = stats["months"], frame.keys
