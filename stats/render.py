@@ -89,11 +89,11 @@ class Palette:
 
 PALETTES = {
     Theme.LIGHT: Palette("#1f1c19", "#665f58", "#ffffff", "#e8e4df", "#b8afa6",
-                         ("#dda184", "#cd7a58", "#a9512f", "#74301b"),
-                         ("#a65a3d", "#a04f31", "#8f4329", "#74301b"), "#24773f", "#b5532f"),
+                         ("#cf7d5a", "#b45733", "#8b3f23", "#612a17"),
+                         ("#b65b35", "#b45733", "#8b3f23", "#612a17"), "#24773f", "#b5532f"),
     Theme.DARK: Palette("#efebe7", "#a39c95", "#0d1117", "#2a2928", "#57524d",
-                        ("#874a35", "#b3654a", "#da8b6c", "#f3bea6"),
-                        ("#c97a5e", "#d0866a", "#da8b6c", "#f3bea6"), "#5fc68a", "#e08463"),
+                        ("#935038", "#c46945", "#de9474", "#f5c6ae"),
+                        ("#ba6748", "#c46945", "#de9474", "#f5c6ae"), "#5fc68a", "#e08463"),
 }
 
 
@@ -101,6 +101,12 @@ def noto_sans_width(text: str, size: float, bold: bool = False) -> float:
     em = sum(0.27 if ch == " " else 0.32 if ch in "ilI.,:;|'()[]" else 0.85 if ch in "mwMW–"
              else 0.62 if ch.isupper() or ch.isdigit() else 0.55 for ch in text)
     return em * size * (1.02 if bold else 1)
+
+
+
+
+def band_label(band: dict) -> str:
+    return f"{band['label']} lines"
 
 
 def compact(n: int) -> str:
@@ -433,7 +439,7 @@ def pr_chart(stats: dict, frame: Frame, theme: Theme) -> str:
                          p.size_ramp[j])
     tops = [stack[-1].top for stack in stacks]
     right = frame.bar_left(frame.last) + frame.bar
-    latest_band_labels = [EndLabel(right, segment.middle, [band["label"]], color)
+    latest_band_labels = [EndLabel(right, segment.middle, [band_label(band)], color)
                           for segment, band, color in zip(stacks[-1], bands, p.legible_sizes)]
     draw_direct_labels(svg, frame, latest_band_labels, False, tops[-1], base - LABEL_SIZE / 2)
 
@@ -574,7 +580,7 @@ def frame_for(stats: dict, keys: list[str]) -> Frame:
     drawn = [*pr_ticks(stats, keys), *line_ticks(stats, keys)]
     left = PAD + max(noto_sans_width(exact_tick(value), LABEL_SIZE) for value in drawn) + 10
     last = months[keys[-1]]
-    labels = [*(band["label"] for band in bands), *LINE_NAMES.values()]
+    labels = [*(band_label(band) for band in bands), *LINE_NAMES.values()]
     widest = max(*(noto_sans_width(label, LABEL_SIZE) for label in labels),
                  *(noto_sans_width(compact(last[kind]), LABEL_SIZE, True) for kind in LineKind))
     surge = keys.index(stats["surge_month"]) if stats["surge_month"] in keys[1:] else None
