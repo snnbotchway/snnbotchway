@@ -130,12 +130,12 @@ def month_start(key: str) -> date:
     return date.fromisoformat(f"{key}-01")
 
 
-def units(phrases: list[str], size: float, width: float, bold: bool) -> list[str]:
+def wrappable_pieces(phrases: list[str], size: float, width: float, bold: bool) -> list[str]:
     return [word for phrase in phrases
             for word in ([phrase] if noto_sans_width(phrase, size, bold) <= width else phrase.split())]
 
 
-def filled(pieces: list[str], size: float, width: float, bold: bool) -> list[str]:
+def greedy_wrap(pieces: list[str], size: float, width: float, bold: bool) -> list[str]:
     rows: list[str] = []
     for piece in pieces:
         if rows and noto_sans_width(f"{rows[-1]} {piece}", size, bold) <= width:
@@ -146,10 +146,10 @@ def filled(pieces: list[str], size: float, width: float, bold: bool) -> list[str
 
 
 def balanced_rows(phrases: list[str], size: float, width: float, bold: bool) -> list[str]:
-    pieces = units(phrases, size, width, bold)
-    rows = filled(pieces, size, width, bold)
+    pieces = wrappable_pieces(phrases, size, width, bold)
+    rows = greedy_wrap(pieces, size, width, bold)
     while True:
-        narrower = filled(pieces, size, max(noto_sans_width(row, size, bold) for row in rows) - 1, bold)
+        narrower = greedy_wrap(pieces, size, max(noto_sans_width(row, size, bold) for row in rows) - 1, bold)
         if len(narrower) != len(rows) or narrower == rows:
             return rows
         rows = narrower
@@ -321,14 +321,15 @@ def draw_month_axis(svg: Svg, frame: Frame, base: float, counts: list[int] | Non
     bottom = base + AXIS_GAP + YEAR_GAP
     if not counts:
         return bottom
-    layouts = [([short_total(n, decimals) for n in counts], rows) for decimals in (True, False) for rows in (1, 2)]
-    totals, rows = next(((totals, rows) for totals, rows in layouts
-                         if all(fits(totals[i::rows], TOTAL_SIZE, True, frame.step * rows) for i in range(rows))),
-                        layouts[-1])
+    layouts = [([short_total(n, decimals) for n in counts], row_count) for decimals in (True, False)
+               for row_count in (1, 2)]
+    totals, row_count = next(((totals, row_count) for totals, row_count in layouts
+                              if all(fits(totals[i::row_count], TOTAL_SIZE, True, frame.step * row_count)
+                                     for i in range(row_count))), layouts[-1])
     for i, total in enumerate(totals):
-        svg.text(frame.centre(i), bottom + TOTALS_GAP * (1 + i % rows), total, TOTAL_SIZE, svg.palette.ink,
+        svg.text(frame.centre(i), bottom + TOTALS_GAP * (1 + i % row_count), total, TOTAL_SIZE, svg.palette.ink,
                  Anchor.MIDDLE, True)
-    return bottom + TOTALS_GAP * rows
+    return bottom + TOTALS_GAP * row_count
 
 
 def counted_to(stats: dict, frame: Frame) -> str:
