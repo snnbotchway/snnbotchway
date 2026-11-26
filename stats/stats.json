@@ -170,7 +170,6 @@
   },
   "baseline": {
     "first_month": "2026-05",
-    "last_month": "2026-07",
-    "prs_per_month": 22.7
+    "last_month": "2026-07"
   }
 }
