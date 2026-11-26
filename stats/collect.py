@@ -247,7 +247,6 @@ def summarize(rows: list[dict], today: date) -> dict:
         "baseline": {
             "first_month": baseline[0],
             "last_month": baseline[-1],
-            "prs_per_month": round(sum(months[key]["prs"] for key in baseline) / len(baseline), 1),
         },
     }
 
