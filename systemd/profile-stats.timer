@@ -1,8 +1,8 @@
 [Unit]
-Description=Refresh the GitHub profile shipping stats weekly
+Description=Refresh the GitHub profile shipping stats daily
 
 [Timer]
-OnCalendar=Mon *-*-* 06:00:00
+OnCalendar=*-*-* 06:00:00
 Persistent=true
 RandomizedDelaySec=15min
 

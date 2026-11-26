@@ -1,6 +1,6 @@
 # How these numbers are counted
 
-Every Monday a script counts the pull requests I authored that were merged, in public and private repositories, from November 2025 on. Only totals are published: [`stats.json`](stats.json) holds no repository names, titles or code.
+Every day a script counts the pull requests I authored that were merged, in public and private repositories, from November 2025 on. Only totals are published: [`stats.json`](stats.json) holds no repository names, titles or code.
 
 ## Pull requests
 
