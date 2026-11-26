@@ -299,9 +299,12 @@ def fits(texts: list[str], size: float, bold: bool, step: float) -> bool:
     return all((a + b) / 2 + TEXT_GAP <= step for a, b in zip(widths, widths[1:]))
 
 
+def opens_year(key: str, keys: list[str]) -> bool:
+    return key == keys[0] or month_start(key).month == 1
+
+
 def year_marks(frame: Frame) -> dict[int, str]:
-    starts = [month_start(key) for key in frame.keys]
-    marks = {i: f"{start:%Y}" for i, start in enumerate(starts) if i == 0 or start.month == 1}
+    marks = {i: f"{month_start(key):%Y}" for i, key in enumerate(frame.keys) if opens_year(key, frame.keys)}
     if 1 in marks and 0 in marks and not fits([marks[0], marks[1]], LABEL_SIZE, False, frame.step):
         del marks[0]
     return marks
@@ -493,7 +496,7 @@ def spans_years(keys: list[str]) -> bool:
 
 def spoken(key: str, keys: list[str], with_year: bool = False) -> str:
     start = month_start(key)
-    named = with_year or spans_years(keys) and (key == keys[0] or start.month == 1)
+    named = with_year or spans_years(keys) and opens_year(key, keys)
     return f"{start:%B %Y}" if named else f"{start:%B}"
 
 
@@ -553,7 +556,7 @@ def charted_months(stats: dict) -> list[str]:
     keys = sorted(key for key in stats["months"] if key >= stats["baseline"]["first_month"])
     latest, previous = keys[-1], keys[-2]
     in_progress = is_partial(month_start(latest), date.fromisoformat(stats["generated"]))
-    still_catching_up = in_progress and stats["months"][latest]["prs"] < stats["months"][previous]["prs"]
+    still_catching_up = in_progress and stats["months"][latest]["prs"] <= stats["months"][previous]["prs"]
     return (keys[:-1] if still_catching_up else keys)[-WINDOW_MONTHS:]
 
 
