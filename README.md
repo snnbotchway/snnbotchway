@@ -25,7 +25,7 @@ Since August: **650** PRs in **25+** repos. Half are under **216** lines and 90%
 <details>
 <summary>Lines shipped and PR sizes</summary>
 
-<picture><source media="(prefers-color-scheme: dark)" srcset="assets/lines-dark.svg"><img src="assets/lines-light.svg" alt="Lines added and deleted per month, capped at 5,000 lines per PR: 250k added and 70k deleted so far in November" width="560"></picture>
+<picture><source media="(prefers-color-scheme: dark)" srcset="assets/lines-dark.svg"><img src="assets/lines-light.svg" alt="Lines shipped per month, each PR counted up to 5,000 lines: 4k added and 3k deleted in May 2026; 7k added and 1k deleted in June; 11k added and 1k deleted in July; 13k added and 4k deleted in August; 36k added and 22k deleted in September; 99k added and 37k deleted in October; 250k added and 70k deleted so far in November" width="560"></picture>
 
 Measure | Since August
 --- | --:

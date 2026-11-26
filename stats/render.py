@@ -539,21 +539,26 @@ def prs_alt(months: dict, frame: Frame, partial: bool) -> str:
     return f"Merged PRs per month, stacked by lines per PR: {before}, then {counts}"
 
 
+def lines_alt(months: dict, keys: list[str], partial: bool, cap: int) -> str:
+    entries = [f"{compact(months[key][LineKind.ADDITIONS])} added and "
+               f"{compact(months[key][LineKind.DELETIONS])} deleted "
+               f"{'so far ' if partial and key == keys[-1] else ''}in {spoken(key, keys, key == keys[0])}"
+               for key in keys]
+    return f"Lines shipped per month, each PR counted up to {cap:,} lines: " + "; ".join(entries)
+
+
 def readme(stats: dict, frame: Frame) -> str:
     months, since = stats["months"], stats["since_surge"]
     generated = date.fromisoformat(stats["generated"])
     surge = month_start(stats["surge_month"])
     surge_name = f"{surge:%B}" if surge.year == generated.year else f"{surge:%B %Y}"
     partial = in_progress(stats, frame.keys)
-    last = months[frame.keys[-1]]
-    lines_alt = (f"Lines added and deleted per month, capped at {stats['line_cap_per_pr']:,} lines per PR: "
-                 f"{compact(last[LineKind.ADDITIONS])} added and {compact(last[LineKind.DELETIONS])} deleted "
-                 f"{'so far ' if partial else ''}in {spoken(frame.keys[-1], frame.keys, spans_years(frame.keys))}")
+    lines_alt_text = lines_alt(months, frame.keys, partial, stats["line_cap_per_pr"])
     floors = {band["key"]: band["floor"] for band in stats["size_bands"]}
     return Template(TEMPLATE_FILE.read_text()).substitute(
         surge_month=surge_name,
         prs_chart=picture(Chart.PRS, prs_alt(months, frame, partial)),
-        lines_chart=picture(Chart.LINES, lines_alt),
+        lines_chart=picture(Chart.LINES, lines_alt_text),
         private=f"{since['private_prs']:,}",
         prs=f"{since['prs']:,}",
         repos=since["repos"],
