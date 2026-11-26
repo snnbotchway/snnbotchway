@@ -230,7 +230,7 @@ def pr_chart(stats: dict, frame: Frame, theme: Theme) -> str:
              min(tops[:frame.surge]) - 16 - (len(rows) - 1) * ROW_HEIGHT, rows, VALUE_SIZE, Anchor.MIDDLE)
 
     draw_surge_line(svg, frame, plot_top, base)
-    note = f"{month_start(stats['surge_month']):%b %Y}: built my own agent fleet"
+    note = f"{month_start(stats['surge_month']):%b %Y}: started building my agent workflow"
     note_x = frame.surge_x - 12
     svg.rows(note_x, plot_top + 26, balanced_rows(note, VALUE_SIZE, note_x - PAD, True), VALUE_SIZE, Anchor.END, True)
     svg.line(PAD, base + 1, CHART_WIDTH - PAD, base + 1)
