@@ -20,7 +20,10 @@ DISPLAY_WIDTH = CHART_WIDTH
 PAD = 4
 LABEL_SIZE = 19
 TOTAL_SIZE = 20
-TITLE_SIZE = 22
+TITLE_SIZE = 20
+REGULAR = 400
+MEDIUM = 500
+BOLD = 600
 LINE_HEIGHT = 1.3
 TEXT_GAP = 4
 WINDOW_MONTHS = 12
@@ -193,19 +196,19 @@ class Svg:
         self.palette, self.label, self.parts = PALETTES[theme], label, []
         self.space_above = space_above
 
-    def text(self, x, y, text, size=LABEL_SIZE, fill="", anchor=Anchor.START, bold=False, halo=False):
-        width = noto_sans_width(text, size, bold)
+    def text(self, x, y, text, size=LABEL_SIZE, fill="", anchor=Anchor.START, weight=REGULAR, halo=False):
+        width = noto_sans_width(text, size, weight > REGULAR)
         left = {Anchor.START: x, Anchor.MIDDLE: x - width / 2, Anchor.END: x - width}[anchor]
         x += max(PAD - left, 0) + min(CHART_WIDTH - PAD - (left + width), 0)
-        extra = (' font-weight="600"' if bold else "") + (
+        extra = (f' font-weight="{weight}"' if weight != REGULAR else "") + (
             f' stroke="{self.palette.page}" stroke-width="5" stroke-linejoin="round" paint-order="stroke"'
             if halo else "")
         self.parts.append(f'<text x="{x:.1f}" y="{y:.1f}" font-size="{size}" fill="{fill or self.palette.muted}" '
                           f'text-anchor="{anchor}"{extra}>{escape(text)}</text>')
 
-    def rows(self, x, y, rows, size, fill, anchor, bold=False):
+    def rows(self, x, y, rows, size, fill, anchor, weight=REGULAR):
         for i, row in enumerate(rows):
-            self.text(x, y + i * row_height(size), row, size, fill, anchor, bold, True)
+            self.text(x, y + i * row_height(size), row, size, fill, anchor, weight, True)
 
     def path(self, d, fill="none", stroke="", width=1.0, dash=""):
         strokes = f' stroke="{stroke}" stroke-width="{width}"' if stroke else ""
@@ -222,7 +225,7 @@ class Svg:
 
     def heading(self, title: str, unit: str, note: str) -> None:
         p = self.palette
-        self.text(PAD, TITLE_Y, title, TITLE_SIZE, p.ink, bold=True)
+        self.text(PAD, TITLE_Y, title, TITLE_SIZE, p.ink, weight=BOLD)
         self.text(PAD, UNIT_Y, unit)
         if note:
             self.text(CHART_WIDTH - PAD, TITLE_Y, note, anchor=Anchor.END)
@@ -297,7 +300,7 @@ def draw_direct_labels(svg: Svg, frame: Frame, labels: list[EndLabel], bold_firs
         svg.path(f"M{label.x:.1f},{label.y:.1f}H{label.x + 4:.1f}L{column - 5:.1f},{y:.1f}", stroke=svg.palette.rule)
         first = y + LABEL_SIZE * 0.35 - (len(label.rows) - 1) * rh / 2
         for k, row in enumerate(label.rows):
-            svg.text(column, first + k * rh, row, fill=label.color, bold=bold_first and k == 0)
+            svg.text(column, first + k * rh, row, fill=label.color, weight=BOLD if bold_first and k == 0 else REGULAR)
 
 
 def fits(texts: list[str], size: float, bold: bool, step: float) -> bool:
@@ -334,7 +337,7 @@ def draw_month_axis(svg: Svg, frame: Frame, base: float, counts: list[int] | Non
                                      for i in range(row_count))), layouts[-1])
     for i, total in enumerate(totals):
         svg.text(frame.centre(i), bottom + TOTALS_GAP * (1 + i % row_count), total, TOTAL_SIZE, svg.palette.ink,
-                 Anchor.MIDDLE, True)
+                 Anchor.MIDDLE, BOLD)
     return bottom + TOTALS_GAP * row_count
 
 
@@ -392,7 +395,7 @@ def draw_surge_note(svg: Svg, frame: Frame, note: Note, base: float) -> None:
     crosses = note.left < frame.surge_x < note.left + note.width
     top = note.bottom + 10 if crosses else NOTE_TOP - LABEL_SIZE * 0.8
     svg.line(frame.surge_x, top, frame.surge_x, base, svg.palette.rule, "3 4")
-    svg.rows(note.x, NOTE_TOP, note.rows, LABEL_SIZE, svg.palette.ink, note.anchor, True)
+    svg.rows(note.x, NOTE_TOP, note.rows, LABEL_SIZE, svg.palette.ink, note.anchor, MEDIUM)
 
 
 @dataclass(frozen=True)
@@ -418,7 +421,7 @@ def pr_chart(stats: dict, frame: Frame, theme: Theme) -> str:
     first = month_start(frame.keys[0])
     svg = Svg(theme, f"Merged pull requests per month since {first:%B %Y}, stacked by lines per PR")
     p = svg.palette
-    svg.heading("Merged PRs per month", "stacked by lines changed per PR", counted_to(stats, frame))
+    svg.heading("Merged PRs per month", "stacked by lines per PR", counted_to(stats, frame))
     values = pr_ticks(stats, frame.keys)
     scale = PR_PLOT_HEIGHT / values[-1]
 
@@ -453,10 +456,11 @@ def lines_chart(stats: dict, frame: Frame, theme: Theme) -> str:
     months, keys = stats["months"], frame.keys
     base = PLOT_TOP + LINES_PLOT_HEIGHT
     first = month_start(keys[0])
-    cap = f"capped at {stats['line_cap_per_pr']:,} lines per PR"
-    svg = Svg(theme, f"Lines added and deleted per month since {first:%B %Y}, {cap}", SPACE_UNDER_SUMMARY)
+    cap = stats["line_cap_per_pr"]
+    subtitle = f"each PR counted up to {cap:,} lines"
+    svg = Svg(theme, f"Lines added and deleted per month since {first:%B %Y}, {subtitle}", SPACE_UNDER_SUMMARY)
     p = svg.palette
-    svg.heading("Lines changed per month", cap, counted_to(stats, frame))
+    svg.heading("Lines shipped per month", subtitle, counted_to(stats, frame))
     values = line_ticks(stats, keys)
     scale = LINES_PLOT_HEIGHT / values[-1]
     draw_grid(svg, frame, values, base, scale)
