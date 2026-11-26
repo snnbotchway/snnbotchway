@@ -1,6 +1,6 @@
 {
   "generated": "2026-11-26",
-  "surge_month": "2026-09",
+  "surge_month": "2026-08",
   "line_cap_per_pr": 5000,
   "size_bands": [
     {
@@ -146,31 +146,31 @@
       "xl": 10
     },
     "2026-11": {
-      "prs": 393,
-      "private": 336,
-      "additions": 249190,
-      "deletions": 69520,
+      "prs": 397,
+      "private": 340,
+      "additions": 250075,
+      "deletions": 69583,
       "s": 166,
-      "m": 142,
+      "m": 146,
       "l": 64,
       "xl": 21
     }
   },
   "since_surge": {
-    "prs": 623,
+    "prs": 650,
     "repos": "25+",
-    "private_prs": 563,
+    "private_prs": 589,
     "private_projects": "15+",
-    "large": 138,
-    "extra_large": 35,
-    "median": 200,
-    "p90": 2983,
-    "lines_shipped": 988072,
-    "test_share": 0.231
+    "large": 143,
+    "extra_large": 36,
+    "median": 216,
+    "p90": 2927,
+    "lines_shipped": 1022930,
+    "test_share": 0.225
   },
   "baseline": {
     "first_month": "2026-05",
-    "last_month": "2026-08",
-    "prs_per_month": 22.8
+    "last_month": "2026-07",
+    "prs_per_month": 22.7
   }
 }
