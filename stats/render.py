@@ -223,12 +223,10 @@ class Svg:
         self.parts.append(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{DOT}" fill="{fill}" '
                           f'stroke="{self.palette.page}" stroke-width="2"/>')
 
-    def heading(self, title: str, unit: str, note: str) -> None:
+    def heading(self, title: str, unit: str) -> None:
         p = self.palette
         self.text(PAD, TITLE_Y, title, TITLE_SIZE, p.ink, weight=BOLD)
         self.text(PAD, UNIT_Y, unit)
-        if note:
-            self.text(CHART_WIDTH - PAD, TITLE_Y, note, anchor=Anchor.END)
 
     def render(self, bottom: float) -> str:
         style = f"text{{font-family:{FONT};font-variant-numeric:tabular-nums}}"
@@ -319,7 +317,8 @@ def year_marks(frame: Frame) -> dict[int, str]:
     return marks
 
 
-def draw_month_axis(svg: Svg, frame: Frame, base: float, counts: list[int] | None = None) -> float:
+def draw_month_axis(svg: Svg, frame: Frame, base: float, counts: list[int] | None = None,
+                    so_far: bool = False) -> float:
     names = [f"{month_start(key):%b}" for key in frame.keys]
     if not fits(names, LABEL_SIZE, False, frame.step):
         names = [name[0] for name in names]
@@ -338,12 +337,16 @@ def draw_month_axis(svg: Svg, frame: Frame, base: float, counts: list[int] | Non
     for i, total in enumerate(totals):
         svg.text(frame.centre(i), bottom + TOTALS_GAP * (1 + i % row_count), total, TOTAL_SIZE, svg.palette.ink,
                  Anchor.MIDDLE, BOLD)
-    return bottom + TOTALS_GAP * row_count
+    bottom += TOTALS_GAP * row_count
+    if so_far:
+        svg.text(frame.centre(frame.last), bottom + row_height(LABEL_SIZE), "so far", LABEL_SIZE, svg.palette.muted,
+                 Anchor.MIDDLE)
+        bottom += row_height(LABEL_SIZE)
+    return bottom
 
 
-def counted_to(stats: dict, frame: Frame) -> str:
-    generated, latest = date.fromisoformat(stats["generated"]), month_start(frame.keys[-1])
-    return f"counted to {latest:%b} {generated.day}" if is_partial(latest, generated) else ""
+def in_progress(stats: dict, keys: list[str]) -> bool:
+    return is_partial(month_start(keys[-1]), date.fromisoformat(stats["generated"]))
 
 
 @dataclass(frozen=True)
@@ -421,7 +424,7 @@ def pr_chart(stats: dict, frame: Frame, theme: Theme) -> str:
     first = month_start(frame.keys[0])
     svg = Svg(theme, f"Merged pull requests per month since {first:%B %Y}, stacked by lines per PR")
     p = svg.palette
-    svg.heading("Merged PRs per month", "stacked by lines per PR", counted_to(stats, frame))
+    svg.heading("Merged PRs per month", "stacked by lines per PR")
     values = pr_ticks(stats, frame.keys)
     scale = PR_PLOT_HEIGHT / values[-1]
 
@@ -448,9 +451,16 @@ def pr_chart(stats: dict, frame: Frame, theme: Theme) -> str:
 
     if note:
         draw_surge_note(svg, frame, note, base)
-    bottom = draw_month_axis(svg, frame, base, [months[key]["prs"] for key in frame.keys])
+    bottom = draw_month_axis(svg, frame, base, [months[key]["prs"] for key in frame.keys],
+                             in_progress(stats, frame.keys))
     return svg.render(bottom + 8)
 
+
+
+def line_end_rows(stats: dict, keys: list[str], kind: LineKind) -> list[str]:
+    month = stats["months"][keys[-1]]
+    qualifier = " so far" if in_progress(stats, keys) else ""
+    return [compact(month[kind]), f"{LINE_NAMES[kind]}{qualifier}"]
 
 def lines_chart(stats: dict, frame: Frame, theme: Theme) -> str:
     months, keys = stats["months"], frame.keys
@@ -460,7 +470,7 @@ def lines_chart(stats: dict, frame: Frame, theme: Theme) -> str:
     subtitle = f"each PR counted up to {cap:,} lines"
     svg = Svg(theme, f"Lines added and deleted per month since {first:%B %Y}, {subtitle}", SPACE_UNDER_SUMMARY)
     p = svg.palette
-    svg.heading("Lines shipped per month", subtitle, counted_to(stats, frame))
+    svg.heading("Lines shipped per month", subtitle)
     values = line_ticks(stats, keys)
     scale = LINES_PLOT_HEIGHT / values[-1]
     draw_grid(svg, frame, values, base, scale)
@@ -470,19 +480,19 @@ def lines_chart(stats: dict, frame: Frame, theme: Theme) -> str:
         svg.line(frame.surge_x, PLOT_TOP - 8, frame.surge_x, base, p.rule, "3 4")
         svg.text(frame.surge_x + 8, PLOT_TOP + LABEL_SIZE * 0.35 - 8, f"{surge:%b %Y}", halo=True)
 
-    still_climbing = bool(counted_to(stats, frame))
+    partial = in_progress(stats, keys)
     ends = []
     for kind, color in ((LineKind.DELETIONS, p.deleted), (LineKind.ADDITIONS, p.added)):
         points = [(frame.centre(i), base - months[key][kind] * scale) for i, key in enumerate(keys)]
-        solid = points[:-1] if still_climbing else points
+        solid = points[:-1] if partial else points
         svg.path("M" + "L".join(f"{x:.1f},{y:.1f}" for x, y in solid), stroke=color, width=2.5)
-        if still_climbing:
+        if partial:
             (x1, y1), (x2, y2) = points[-2:]
             svg.path(f"M{x1:.1f},{y1:.1f}L{x2:.1f},{y2:.1f}", stroke=color, width=2.5, dash="5 5")
         for x, y in points:
             svg.dot(x, y, color)
         x, y = points[-1]
-        ends.append(EndLabel(x + DOT, y, [compact(months[keys[-1]][kind]), LINE_NAMES[kind]], color))
+        ends.append(EndLabel(x + DOT, y, line_end_rows(stats, keys, kind), color))
     draw_direct_labels(svg, frame, ends, True, PLOT_TOP, base - row_height(LABEL_SIZE) / 2)
 
     return svg.render(draw_month_axis(svg, frame, base) + 8)
@@ -534,8 +544,7 @@ def readme(stats: dict, frame: Frame) -> str:
     generated = date.fromisoformat(stats["generated"])
     surge = month_start(stats["surge_month"])
     surge_name = f"{surge:%B}" if surge.year == generated.year else f"{surge:%B %Y}"
-    latest = month_start(frame.keys[-1])
-    partial = is_partial(latest, generated)
+    partial = in_progress(stats, frame.keys)
     last = months[frame.keys[-1]]
     lines_alt = (f"Lines added and deleted per month, capped at {stats['line_cap_per_pr']:,} lines per PR: "
                  f"{compact(last[LineKind.ADDITIONS])} added and {compact(last[LineKind.DELETIONS])} deleted "
@@ -566,8 +575,8 @@ def readme(stats: dict, frame: Frame) -> str:
 def charted_months(stats: dict) -> list[str]:
     keys = sorted(key for key in stats["months"] if key >= stats["baseline"]["first_month"])
     latest, previous = keys[-1], keys[-2]
-    in_progress = is_partial(month_start(latest), date.fromisoformat(stats["generated"]))
-    still_catching_up = in_progress and stats["months"][latest]["prs"] <= stats["months"][previous]["prs"]
+    partial = in_progress(stats, keys)
+    still_catching_up = partial and stats["months"][latest]["prs"] <= stats["months"][previous]["prs"]
     return (keys[:-1] if still_catching_up else keys)[-WINDOW_MONTHS:]
 
 
@@ -584,7 +593,8 @@ def frame_for(stats: dict, keys: list[str]) -> Frame:
     drawn = [*pr_ticks(stats, keys), *line_ticks(stats, keys)]
     left = PAD + max(noto_sans_width(exact_tick(value), LABEL_SIZE) for value in drawn) + 10
     last = months[keys[-1]]
-    labels = [*(band_label(band) for band in bands), *LINE_NAMES.values()]
+    labels = [*(band_label(band) for band in bands),
+              *(row for kind in LineKind for row in line_end_rows(stats, keys, kind)[1:])]
     widest = max(*(noto_sans_width(label, LABEL_SIZE) for label in labels),
                  *(noto_sans_width(compact(last[kind]), LABEL_SIZE, True) for kind in LineKind))
     surge = keys.index(stats["surge_month"]) if stats["surge_month"] in keys[1:] else None
