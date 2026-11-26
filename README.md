@@ -1,16 +1,14 @@
 **I'm a senior software engineer with a team's output.** I work embedded in client teams: drop me into yours and I'll learn the stack and get things into production fast.
 
-Agents have written all my code since January. In September I started building my own workflow around them, and I keep improving it. I run it from [T3 Code](https://github.com/pingdotgg/t3code) on my PC or my phone. I write the spec, agents build it in parallel, and nothing gets merged until it's tested, reviewed (up to three times) and green on CI. That's the jump you see below.
+Agents have written all my code since January. In August I started building my own workflow and agent fleet around them, and I keep improving both. I run it from [T3 Code](https://github.com/pingdotgg/t3code) on my PC or my phone. I write the spec, agents build it in parallel, and nothing gets merged until it's tested, reviewed (up to three times) and green on CI. That's the jump you see below.
 
-<picture><source media="(prefers-color-scheme: dark)" srcset="assets/prs-dark.svg"><img src="assets/prs-light.svg" alt="Merged PRs per month by size: about 23 a month from May to August 2026, then 66 in September and 393 so far in November" width="560"></picture>
+<picture><source media="(prefers-color-scheme: dark)" srcset="assets/prs-dark.svg"><img src="assets/prs-light.svg" alt="Merged PRs per month, stacked by lines per PR: 20, 21 and 27 from May to July 2026, then 23 in August, 66 in September, 164 in October and 397 so far in November" width="560"></picture>
 
-<sub>Counted to 26 November.</sub>
-
-Since September: **623** PRs in **25+** repos. Half are under **200** lines and 90% are under **2,983**. **23%** of the lines I change are tests. [Here's a typical one.](https://github.com/snnbotchway/faultline/pull/22)
+Since August: **650** PRs in **25+** repos. Half are under **216** lines and 90% are under **2,927**. **22%** of the lines I change are tests. [Here's a typical one.](https://github.com/snnbotchway/faultline/pull/22)
 
 ### My best work is private
 
-[**563** of those 623 PRs](https://github.com/snnbotchway/snnbotchway/blob/main/stats/README.md) went to 15+ private projects for my employer and clients. All of it runs in production, and I can't link any of it. Think internal systems a business runs on every day, payment and messaging tools, and DeFi backends. Email me at [solomonbotchway7@gmail.com](mailto:solomonbotchway7@gmail.com) and I'll walk you through it, as far as my NDAs allow.
+[**589** of those 650 PRs](https://github.com/snnbotchway/snnbotchway/blob/main/stats/README.md) went to 15+ private projects for my employer and clients. All of it runs in production, and I can't link any of it. Think internal systems a business runs on every day, payment and messaging tools, and DeFi backends. Email me at [solomonbotchway7@gmail.com](mailto:solomonbotchway7@gmail.com) and I'll walk you through it, as far as my NDAs allow.
 
 ### What I can show
 
@@ -26,15 +24,14 @@ Since September: **623** PRs in **25+** repos. Half are under **200** lines and 
 
 <details>
 <summary>Lines shipped and PR sizes</summary>
-<br>
 
-<picture><source media="(prefers-color-scheme: dark)" srcset="assets/lines-dark.svg"><img src="assets/lines-light.svg" alt="Lines added and deleted per month, capped at 5,000 lines per PR: 249k added and 70k deleted so far in November" width="560"></picture>
+<picture><source media="(prefers-color-scheme: dark)" srcset="assets/lines-dark.svg"><img src="assets/lines-light.svg" alt="Lines added and deleted per month, capped at 5,000 lines per PR: 250k added and 70k deleted so far in November" width="560"></picture>
 
-Measure | Since September
+Measure | Since August
 --- | --:
-[Lines shipped](https://github.com/snnbotchway/snnbotchway/blob/main/stats/README.md#lines-shipped), uncapped | 988k
-PRs of 1,000 lines or more | 138
-PRs of 5,000 lines or more | 35
+[Lines shipped](https://github.com/snnbotchway/snnbotchway/blob/main/stats/README.md#lines-shipped), uncapped | 1.0M
+PRs of 1,000 lines or more | 143
+PRs of 5,000 lines or more | 36
 
 </details>
 

@@ -1,10 +1,8 @@
 **I'm a senior software engineer with a team's output.** I work embedded in client teams: drop me into yours and I'll learn the stack and get things into production fast.
 
-Agents have written all my code since January. In ${surge_month} I started building my own workflow around them, and I keep improving it. I run it from [T3 Code](https://github.com/pingdotgg/t3code) on my PC or my phone. I write the spec, agents build it in parallel, and nothing gets merged until it's tested, reviewed (up to three times) and green on CI. That's the jump you see below.
+Agents have written all my code since January. In ${surge_month} I started building my own workflow and agent fleet around them, and I keep improving both. I run it from [T3 Code](https://github.com/pingdotgg/t3code) on my PC or my phone. I write the spec, agents build it in parallel, and nothing gets merged until it's tested, reviewed (up to three times) and green on CI. That's the jump you see below.
 
 ${prs_chart}
-
-<sub>Counted to ${counted_to}.</sub>
 
 Since ${surge_month}: **${prs}** PRs in **${repos}** repos. Half are under **${median}** lines and 90% are under **${p90}**. **${tests}%** of the lines I change are tests. [Here's a typical one.](https://github.com/snnbotchway/faultline/pull/22)
 
@@ -26,7 +24,6 @@ Since ${surge_month}: **${prs}** PRs in **${repos}** repos. Half are under **${m
 
 <details>
 <summary>Lines shipped and PR sizes</summary>
-<br>
 
 ${lines_chart}
 
