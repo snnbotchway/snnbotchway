@@ -27,6 +27,7 @@ WINDOW_MONTHS = 12
 TITLE_Y = 22
 UNIT_Y = 48
 PLOT_TOP = 92
+NOTE_TOP = PLOT_TOP + 6
 PR_PLOT_HEIGHT = 262
 LINES_PLOT_HEIGHT = 190
 AXIS_GAP = 28
@@ -332,40 +333,56 @@ def counted_to(stats: dict, frame: Frame) -> str:
     return f"counted to {latest:%b} {generated.day}" if is_partial(latest, generated) else ""
 
 
-def surge_note(svg: Svg, frame: Frame, stats: dict, tops: list[float], base: float) -> None:
-    p, rh = svg.palette, row_height(LABEL_SIZE)
+@dataclass(frozen=True)
+class Note:
+    rows: list[str]
+    x: float
+    anchor: Anchor
+
+    @property
+    def width(self) -> float:
+        return max(noto_sans_width(row, LABEL_SIZE, True) for row in self.rows)
+
+    @property
+    def left(self) -> float:
+        return self.x if self.anchor == Anchor.START else self.x - self.width
+
+    @property
+    def bottom(self) -> float:
+        return NOTE_TOP + (len(self.rows) - 1) * row_height(LABEL_SIZE) + LABEL_SIZE * 0.3
+
+
+def note_options(frame: Frame, stats: dict) -> list[Note]:
     surge = month_start(stats["surge_month"])
     words = [f"{surge:%b %Y}:", *"started building my agent workflow".split()]
-    first = PLOT_TOP + 6
     spots = [(frame.surge_x + 12, Anchor.START), (frame.surge_x - 12, Anchor.END), (frame.left, Anchor.START)]
-
-    def placed(rows: list[str], x: float, anchor: Anchor) -> tuple[float, float, float] | None:
-        width = max(noto_sans_width(row, LABEL_SIZE, True) for row in rows)
-        left = x if anchor == Anchor.START else x - width
-        bottom = first + (len(rows) - 1) * rh + LABEL_SIZE * 0.3
-        if left < frame.left - 1 or left + width > CHART_WIDTH - PAD:
-            return None
-        under = [tops[i] for i in range(len(tops))
-                 if frame.bar_left(i) < left + width and frame.bar_left(i) + frame.bar > left]
-        return (left, width, bottom) if all(top > bottom + 10 for top in under) else None
-
-    choice = None
+    options = []
     for count in (2, 3, 4):
         for x, anchor in spots:
-            for width in range(120, 340, 4):
-                rows = balanced_rows(words, LABEL_SIZE, width, True)
-                if len(rows) == count and placed(rows, x, anchor):
-                    choice = rows, x, anchor
-                    break
-            if choice:
-                break
-        if choice:
-            break
-    rows, x, anchor = choice or (balanced_rows(words, LABEL_SIZE, 200, True), frame.left, Anchor.START)
-    left, width, bottom = placed(rows, x, anchor) or (x, 0, first + (len(rows) - 1) * rh)
-    crosses = left < frame.surge_x < left + width
-    svg.line(frame.surge_x, bottom + 10 if crosses else first - LABEL_SIZE * 0.8, frame.surge_x, base, p.rule, "3 4")
-    svg.rows(x, first, rows, LABEL_SIZE, p.ink, anchor, True)
+            notes = (Note(balanced_rows(words, LABEL_SIZE, width, True), x, anchor) for width in range(120, 340, 4))
+            note = next((note for note in notes if len(note.rows) == count and frame.left - 1 <= note.left
+                         and note.left + note.width <= CHART_WIDTH - PAD), None)
+            if note:
+                options.append(note)
+    return options
+
+
+def clears_bars(note: Note, frame: Frame, tops: list[float]) -> bool:
+    return all(top > note.bottom + 10 for i, top in enumerate(tops)
+               if frame.bar_left(i) < note.left + note.width and frame.bar_left(i) + frame.bar > note.left)
+
+
+def place_surge_note(frame: Frame, stats: dict, tops: list[float]) -> tuple[Note, float]:
+    options = note_options(frame, stats)
+    clear = next((note for note in options if clears_bars(note, frame, tops)), None)
+    return (clear, 0) if clear else (options[0], options[0].bottom + 14 - PLOT_TOP)
+
+
+def draw_surge_note(svg: Svg, frame: Frame, note: Note, base: float) -> None:
+    crosses = note.left < frame.surge_x < note.left + note.width
+    top = note.bottom + 10 if crosses else NOTE_TOP - LABEL_SIZE * 0.8
+    svg.line(frame.surge_x, top, frame.surge_x, base, svg.palette.rule, "3 4")
+    svg.rows(note.x, NOTE_TOP, note.rows, LABEL_SIZE, svg.palette.ink, note.anchor, True)
 
 
 @dataclass(frozen=True)
@@ -388,16 +405,22 @@ def stacked(month: dict, bands: list[dict], scale: float, base: float) -> list[S
 
 def pr_chart(stats: dict, frame: Frame, theme: Theme) -> str:
     months, bands = stats["months"], stats["size_bands"]
-    base = PLOT_TOP + PR_PLOT_HEIGHT
     first = month_start(frame.keys[0])
     svg = Svg(theme, f"Merged pull requests per month since {first:%B %Y}, stacked by lines per PR")
     p = svg.palette
     svg.heading("Merged PRs per month", "stacked by lines changed per PR", counted_to(stats, frame))
     values = pr_ticks(stats, frame.keys)
     scale = PR_PLOT_HEIGHT / values[-1]
-    draw_grid(svg, frame, values, base, scale)
 
-    stacks = [stacked(months[key], bands, scale, base) for key in frame.keys]
+    def stacks_on(base: float) -> list[list[Segment]]:
+        return [stacked(months[key], bands, scale, base) for key in frame.keys]
+
+    base = PLOT_TOP + PR_PLOT_HEIGHT
+    note, room = (place_surge_note(frame, stats, [stack[-1].top for stack in stacks_on(base)]) if frame.surge
+                  else (None, 0))
+    base += room
+    stacks = stacks_on(base)
+    draw_grid(svg, frame, values, base, scale)
     for i, stack in enumerate(stacks):
         highest = max((j for j, segment in enumerate(stack) if segment.height), default=-1)
         for j, segment in enumerate(stack):
@@ -410,8 +433,8 @@ def pr_chart(stats: dict, frame: Frame, theme: Theme) -> str:
                           for segment, band, color in zip(stacks[-1], bands, p.legible_sizes)]
     draw_direct_labels(svg, frame, latest_band_labels, False, tops[-1], base - LABEL_SIZE / 2)
 
-    if frame.surge:
-        surge_note(svg, frame, stats, tops, base)
+    if note:
+        draw_surge_note(svg, frame, note, base)
     bottom = draw_month_axis(svg, frame, base, [months[key]["prs"] for key in frame.keys])
     return svg.render(bottom + 8)
 
