@@ -4,7 +4,7 @@ Agents have written all my code since January. In ${surge_month} I started build
 
 ${prs_chart}
 
-Since ${surge_month}: **${prs}** PRs in **${repos}** repos. Half are under **${median}** lines and 90% are under **${p90}**. **${tests}%** of the lines I change are tests. [Here's a typical one.](https://github.com/snnbotchway/faultline/pull/22)
+Since ${surge_month}: **${prs}** PRs in **${repos}** repos. Half are under **${median}** lines and 90% are under **${p90}**. Tests make up **${tests}%** of the lines I change. [Here's a typical one.](https://github.com/snnbotchway/faultline/pull/22)
 
 ### My best work is private
 

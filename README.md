@@ -4,7 +4,7 @@ Agents have written all my code since January. In August I started building my o
 
 <picture><source media="(prefers-color-scheme: dark)" srcset="assets/prs-dark.svg"><img src="assets/prs-light.svg" alt="Merged PRs per month, stacked by lines per PR: 20, 21 and 27 from May to July 2026, then 23 in August, 66 in September, 164 in October and 399 so far in November" width="560"></picture>
 
-Since August: **652** PRs in **25+** repos. Half are under **216** lines and 90% are under **2,915**. **23%** of the lines I change are tests. [Here's a typical one.](https://github.com/snnbotchway/faultline/pull/22)
+Since August: **652** PRs in **25+** repos. Half are under **216** lines and 90% are under **2,915**. Tests make up **23%** of the lines I change. [Here's a typical one.](https://github.com/snnbotchway/faultline/pull/22)
 
 ### My best work is private
 
