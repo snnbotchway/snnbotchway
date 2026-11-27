@@ -2,13 +2,13 @@
 
 Agents have written all my code since January. In August I started building my own workflow and agent fleet around them, and I keep improving both. I run it from [T3 Code](https://github.com/pingdotgg/t3code) on my PC or my phone. I write the spec, agents build it in parallel, and nothing gets merged until it's tested, reviewed (up to three times) and green on CI. That's the jump you see below.
 
-<picture><source media="(prefers-color-scheme: dark)" srcset="assets/prs-dark.svg"><img src="assets/prs-light.svg" alt="Merged PRs per month, stacked by lines per PR: 20, 21 and 27 from May to July 2026, then 23 in August, 66 in September, 164 in October and 397 so far in November" width="560"></picture>
+<picture><source media="(prefers-color-scheme: dark)" srcset="assets/prs-dark.svg"><img src="assets/prs-light.svg" alt="Merged PRs per month, stacked by lines per PR: 20, 21 and 27 from May to July 2026, then 23 in August, 66 in September, 164 in October and 399 so far in November" width="560"></picture>
 
-Since August: **650** PRs in **25+** repos. Half are under **216** lines and 90% are under **2,927**. **23%** of the lines I change are tests. [Here's a typical one.](https://github.com/snnbotchway/faultline/pull/22)
+Since August: **652** PRs in **25+** repos. Half are under **216** lines and 90% are under **2,915**. **23%** of the lines I change are tests. [Here's a typical one.](https://github.com/snnbotchway/faultline/pull/22)
 
 ### My best work is private
 
-[**589** of those 650 PRs](https://github.com/snnbotchway/snnbotchway/blob/main/stats/README.md) went to 15+ private projects for my employer and clients. All of it runs in production, and I can't link any of it. Think internal systems a business runs on every day, payment and messaging tools, and DeFi backends. Email me at [solomonbotchway7@gmail.com](mailto:solomonbotchway7@gmail.com) and I'll walk you through it, as far as my NDAs allow.
+[**590** of those 652 PRs](https://github.com/snnbotchway/snnbotchway/blob/main/stats/README.md) went to 15+ private projects for my employer and clients. All of it runs in production, and I can't link any of it. Think internal systems a business runs on every day, payment and messaging tools, and DeFi backends. Email me at [solomonbotchway7@gmail.com](mailto:solomonbotchway7@gmail.com) and I'll walk you through it, as far as my NDAs allow.
 
 ### What I can show
 
@@ -25,7 +25,7 @@ Since August: **650** PRs in **25+** repos. Half are under **216** lines and 90%
 <details>
 <summary>Lines shipped and PR sizes</summary>
 
-<picture><source media="(prefers-color-scheme: dark)" srcset="assets/lines-dark.svg"><img src="assets/lines-light.svg" alt="Lines shipped per month, each PR counted up to 5,000 lines: 4k added and 3k deleted in May 2026; 7k added and 1k deleted in June; 11k added and 1k deleted in July; 13k added and 4k deleted in August; 36k added and 22k deleted in September; 99k added and 37k deleted in October; 250k added and 70k deleted so far in November" width="560"></picture>
+<picture><source media="(prefers-color-scheme: dark)" srcset="assets/lines-dark.svg"><img src="assets/lines-light.svg" alt="Lines shipped per month, each PR counted up to 5,000 lines: 4k added and 3k deleted in May 2026; 7k added and 1k deleted in June; 11k added and 1k deleted in July; 13k added and 4k deleted in August; 36k added and 22k deleted in September; 99k added and 37k deleted in October; 251k added and 70k deleted so far in November" width="560"></picture>
 
 Measure | Since August
 --- | --:
@@ -37,4 +37,4 @@ PRs of 5,000 lines or more | 36
 
 Hiring? Email me at [solomonbotchway7@gmail.com](mailto:solomonbotchway7@gmail.com).
 
-<sub>Updated 26 Nov 2026 · <a href="https://github.com/snnbotchway/snnbotchway/blob/main/stats/README.md">How these numbers are counted</a></sub>
+<sub>Updated 27 Nov 2026 · <a href="https://github.com/snnbotchway/snnbotchway/blob/main/stats/README.md">How these numbers are counted</a></sub>

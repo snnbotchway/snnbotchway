@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-26",
+  "generated": "2026-11-27",
   "surge_month": "2026-08",
   "line_cap_per_pr": 5000,
   "size_bands": [
@@ -146,26 +146,26 @@
       "xl": 10
     },
     "2026-11": {
-      "prs": 397,
-      "private": 340,
-      "additions": 250075,
-      "deletions": 69583,
+      "prs": 399,
+      "private": 341,
+      "additions": 250667,
+      "deletions": 69833,
       "s": 166,
-      "m": 146,
+      "m": 148,
       "l": 64,
       "xl": 21
     }
   },
   "since_surge": {
-    "prs": 650,
+    "prs": 652,
     "repos": "25+",
-    "private_prs": 589,
+    "private_prs": 590,
     "private_projects": "15+",
     "large": 143,
     "extra_large": 36,
     "median": 216,
-    "p90": 2927,
-    "lines_shipped": 1022930,
+    "p90": 2915,
+    "lines_shipped": 1023772,
     "test_share": 0.225
   },
   "baseline": {
